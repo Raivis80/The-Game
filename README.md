@@ -4,7 +4,7 @@
 
 <!--For assestment - README.md file structure was copied from my first milestone project."-->
 ![View](project_files/site.PNG)
-## [View the live project here.](https://raivis80.github.io/MS-2-JavaScript/game.html)
+## [View the live project here.](https://raivis80.github.io/The-Game/)
 ### Table of contents
 
 1. [Introduction](#Introduction)

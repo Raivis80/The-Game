@@ -1,0 +1,533 @@
+html {
+    box-sizing: border-box;
+    background-color: antiquewhite;
+    height: 100vh;
+    padding: 0 10px 10px 0px;
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden;
+}
+
+.gameWindow {
+    box-sizing: border-box;
+    background-color: #fdf5e6;
+    position: absolute;
+    width: 98vw;
+    max-width: 1920px;
+    height: 88vh;
+    border-radius: 6px;
+    box-shadow: inset 0 0 15px rgb(0, 0, 0, .3);
+    left: 0;
+    right: 0;
+    margin: auto
+}
+
+.nav {
+    margin: auto;
+    width: 95vw;
+    max-width: 1920px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.border {
+    box-shadow: 0 0 15px rgb(0, 0, 0, .3);
+    border-radius: 6px;
+}
+
+.buttons:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0, .6);
+    transform: scale(1.03);
+}
+
+/* score counter and level selection */
+.score {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    background-color: oldlace;
+    display: inline-block;
+    padding: 10px;
+    box-shadow: inset 0 0 6px rgb(0, 0, 0, .4);
+    color: royalblue
+}
+
+.score2 {
+    color: green;
+}
+
+.score3 {
+    color: red;
+}
+
+.speed {
+    color: red;
+}
+
+#speed {
+    display: flex;
+}
+
+.pointer {
+    font-size: 1.4rem;
+    color: green;
+}
+
+.info {
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgb(0, 0, 0, .4);
+    color: green;
+    font-size: 2rem;
+    transition: .2s;
+}
+
+.info:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px rgb(0, 0, 0, .4);
+    transform: scale(1.1);
+}
+
+/*--------- Select Level -------*/
+#select_level {
+    margin-left: -580%;
+    min-width: 300px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.selectP {
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-family: 'Press Start 2P', cursive;
+    font-size: max(1rem, 2vh);
+    text-align: center;
+    font-weight: bold;
+    color: green;
+}
+
+.selectP::after {
+    content: ' Level';
+    color: red;
+    transform: scale(.8);
+}
+
+.level {
+    height: 80px;
+    width: 90px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons {
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 150ms;
+    box-shadow: 0 0 15px rgb(0, 0, 0, .3);
+    border-radius: 6px;
+    background-color: antiquewhite;
+}
+
+@media (hover: hover) {
+    .buttons:hover {
+        box-shadow: 0 0 20px rgb(0, 0, 0, .3);
+        cursor: pointer;
+        transform: scale(1.03);
+    }
+}
+
+.l1 {
+    background-color: green;
+    z-index: 1;
+}
+
+.l2 {
+    background-color: red;
+    z-index: 2;
+}
+
+.l3 {
+
+    background-color: royalblue;
+}
+
+.l1,
+.l2,
+.l3 {
+    border-radius: 3px;
+    margin: 3px;
+    width: 25px;
+    height: 25px
+}
+
+.none {
+    display: none;
+}
+
+/* --------lives remaining -----------*/
+#lives_remailing {
+    display: flex;
+}
+
+.life {
+    box-shadow: inset 0 0 5px rgb(0, 0, 0, .4);
+    display: block;
+    margin: 3px;
+    height: 2rem;
+    width: 2rem;
+}
+
+/* -------target divs ----------*/
+.target,
+.bad {
+    box-shadow: 0 0 10px rgb(0, 0, 0, .4);
+    border-radius: 3px;
+    display: none;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+}
+
+.add_life_div {
+    margin: auto;
+    height: 6px;
+    width: 95%;
+    background-color: oldlace;
+    border-radius: 2px;
+    box-shadow: inset 0 0 3px rgb(0, 0, 0, .4);
+}
+
+#add_life {
+    height: 6px;
+    width: 100%;
+}
+
+/*---------------- Start The game----------------- */
+.start_game {
+    box-sizing: border-box;
+    max-width: 1920px;
+    height: inherit;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+
+    background-color: oldlace;
+    border-radius: inherit;
+    box-shadow: inherit;
+    padding: 3% 0px 2% 0px;
+}
+
+.slide_up {
+    margin-top: 150%;
+    transition: margin-top 1s cubic-bezier(.36, 1.27, 1, .49);
+}
+
+.slide_right {
+    transition: margin-left 1s cubic-bezier(.36, 1.27, 1, .49);
+    margin-left: -150%;
+}
+
+.slide_left {
+    transition: margin-left 1s cubic-bezier(.36, 1.27, 1, .49);
+    margin-left: 150%;
+}
+
+.start_heading1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: max(2rem, 4.5vw);
+    color: red;
+}
+
+.start_heading {
+    font-family: 'Press Start 2P', cursive;
+    text-transform: uppercase;
+    font-size: max(2rem, 4vw);
+    color: red;
+    text-align: center;
+}
+
+.start_heading::after {
+    position: absolute;
+    content: ' Game';
+    color: royalblue;
+    transform: scale(.6);
+}
+
+.start_heading::before {
+    position: absolute;
+    content: 'Start ';
+    color: green;
+    transform: scale(.6) translate(-150%);
+}
+
+/*---------------- game over----------------- */
+
+.game-over {
+    display: none;
+    flex-direction: column;
+    background-color: oldlace;
+    justify-content: space-around;
+    max-width: 1920px;
+    height: inherit;
+    border-radius: inherit;
+    box-shadow: inherit;
+}
+
+.game_over_title {
+    text-transform: uppercase;
+    font-family: 'Press Start 2P', cursive;
+    font-size: max(2rem, 4vw);
+    color: maroon;
+    margin: auto;
+    text-align: center;
+}
+
+.game_over_block {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+}
+
+.game_over_btn2 {
+    height: 100px;
+    align-self: center;
+}
+
+.game_over_btn1 {
+    margin: 50px auto;
+}
+
+/* ------------Contact form------------- */
+.contact_window {
+    box-sizing: border-box;
+    max-width: 1920px;
+    height: inherit;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.form {
+    background-color: antiquewhite;
+    box-sizing: border-box;
+    padding: 6px;
+    max-width: 300px;
+    border-radius: 6px;
+}
+
+.submit_alert {
+    box-sizing: border-box;
+    text-align: center;
+    color: green;
+    font-weight: bold;
+    width: 300px;
+    padding: 26px 12px;
+    background-color: antiquewhite;
+}
+
+.spacer {
+    height: 100px;
+}
+
+.contact_window input,
+.contact_window textarea,
+.contact_window button {
+    letter-spacing: 1px;
+    border: none;
+    box-shadow: inset 0 0 6px rgb(0, 0, 0, .4);
+    background-color: oldlace;
+    border-radius: 3px;
+    padding: 6px;
+    margin: 6px 0;
+    box-sizing: border-box;
+    min-width: 288px;
+    max-width: 288px;
+    max-height: 300px;
+}
+
+.contact_window button {
+    box-shadow: 0 0 6px rgb(0, 0, 0, .6);
+    color: oldlace;
+    background-color: green;
+    transition-duration: 0.1s;
+}
+
+.contact_window button:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgb(0, 0, 0, .6);
+}
+
+.contact_title {
+    font-size: 1.2rem;
+    font-family: 'Press Start 2P', cursive;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: green;
+    text-align: center;
+}
+
+.contact_button {
+    padding: 6px 10px;
+    width: 270px;
+    text-align: center;
+}
+
+.contact_play_new {
+    height: 100px;
+    align-self: center;
+}
+
+/*=========INFO /HELP======*/
+.help_div {
+    width: inherit;
+    position: absolute;
+    display: none;
+    justify-content: space-between;
+    top: 0px;
+    z-index: 1;
+}
+
+/* help top popout */
+.help {
+    display: none;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    height: max-content;
+    background-color: rgba(250, 235, 215, .9);
+    margin-top: -280px;
+    padding: 0;
+}
+
+.help p {
+    display: block;
+    width: inherit;
+    text-align: center;
+    box-sizing: border-box;
+    font-weight: 600;
+    padding: 6px;
+    margin: 0;
+    border-top: 1px solid rgb(218, 206, 182);
+}
+
+.help h2 {
+    display: block;
+    width: 1rem;
+    padding: 0;
+    margin: 0;
+}
+
+/* Game rules */
+.game_help {
+    width: 270px;
+    position: absolute;
+    bottom: -100%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    z-index: 3;
+    background-color: rgba(250, 235, 215, .9);
+    padding: 0 12px;
+}
+
+ol,
+li {
+    border-bottom: 1px solid rgb(218, 206, 182);
+    font-weight: 600;
+    line-height: 1.2rem;
+    padding-left: 15px;
+}
+
+.game_help h3 {
+    padding-top: 6px;
+    margin: 0;
+    border-bottom: 1px solid rgb(218, 206, 182);
+    color: green;
+}
+
+.game_help h4 {
+    font-stretch: ultra-condensed;
+    font-size: .6rem;
+}
+
+.game_help h3,
+.game_help h4 {
+    color: green;
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.spacer1 {
+    height: 2rem;
+}
+
+/*-----mobile breakpoints-------*/
+@media only screen and (max-width: 500px) {
+
+    .speed,
+    .score1,
+    .score2,
+    .score3 {
+        font-size: .8rem;
+    }
+
+    .hide,
+    .score3 {
+        display: none;
+    }
+}
+
+/* Landscape for mobile */
+@media only screen and (max-height: 600px) {
+    .game_help {
+        transform: translate(-50%, 0%);
+    }
+}
+
+@media only screen and (max-height: 530px) {
+    .game_help {
+        transform: translate(-50%, 5%);
+    }
+
+    .nav {
+        height: 50px;
+    }
+
+    .game_help h4 {
+        font-size: .5rem;
+    }
+
+    ol,
+    li,
+    .help p,
+    .game_help h3 {
+        font-size: .8rem;
+        line-height: .9rem;
+    }
+
+    .help h2 {
+        font-size: 1.2rem;
+    }
+
+    .contact_button,
+    .start_heading {
+        display: none;
+    }
+
+    .selectP {
+        margin: 0;
+    }
+
+    .gameWindow {
+        height: 80vh;
+    }
+
+    #new_game_btn {
+        display: block;
+
+    }
+
+}

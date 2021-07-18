@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/82100494ce.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@300&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/game.css">
+    <!-- CONTACT FORM API -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js">
+    </script>
+    <script>
+        (function () {
+            // To verify successfull email delivery 
+            // Get your emailjs.com API key
+            // Replace this API key below
+            emailjs.init("user_sNMdDrU9fds14TIEdBqW9");
+        })();
+    </script>
+    <!-- ________________ -->
+    <title>Get That Square</title>
+</head>
+
+<body>
+    <!-- navigation -->
+    <div class="nav" id="nav">
+        <div id="score_counter">
+            <p class="score score1 border">0</p>
+            <p class="score score2 border">0</p>
+            <p class="score score3 border">0</p>
+        </div>
+
+        <div id="speed">
+            <p class="speed score border">0s</p>
+        </div>
+
+        <div class="lives_div">
+            <div id="lives_remailing">
+                <div id="life1" class="life border"></div>
+                <div id="life2" class="life border"></div>
+                <div id="life3" class="life border"></div>
+            </div>
+            <div class="add_life_div">
+                <div id="add_life"></div>
+            </div>
+        </div>
+    </div>
+    <!-- game window -->
+    <div class="gameWindow" id="game_window">
+        <!-- bad objects -->
+        <div class="bad"></div>
+        <div class="bad"></div>
+        <div class="bad"></div>
+        <div class="bad"></div>
+        <div class="bad"></div>
+        <div class="bad"></div>
+        <div class="bad"></div>
+        <div class="bad"></div>
+        <div class="bad"></div>
+        <div class="bad"></div>
+        <div class="bad"></div>
+        <div class="bad"></div>
+        <!-- targets -->
+        <div class="target"></div>
+        <div class="target"></div>
+        <div class="target"></div>
+        <div class="target"></div>
+        <div class="target"></div>
+        <div class="target"></div>
+        <div class="target"></div>
+        <div class="target"></div>
+        <div class="target"></div>
+        <div class="target"></div>
+        <div class="target"></div>
+        <div class="target"></div>
+        <!-- help popup top-->
+        <div id="help" class="help_div">
+            <div class="border help score_help">
+                <i class="pointer fas fa-hand-point-up"></i>
+                <p>
+                    <span style="color: royalblue">0 Score</span><br>
+                    <span style="color: green">0 Streak</span><br>
+                    <span class="hide" style="color: red">0 Missed</span>
+                </p>
+            </div>
+            <div class="border help">
+                <i class="pointer fas fa-hand-point-up"></i>
+                <p style="color: red">0 Speed</p>
+            </div>
+            <div class="border help">
+                <i class="pointer fas fa-hand-point-up"></i>
+                <p style="color: green;">Game Lives</p>
+            </div>
+        </div>
+        <!-- Front page -->
+        <div id="start_game" class="start_game">
+
+            <div class="spacer1">
+                <p id="info"><i class="info fas fa-info-circle"></i></p>
+            </div>
+            <div class="slide_right">
+                <h1 class="start_heading">The</h1>
+            </div>
+
+            <div class="selectP_div slide_left">
+                <p class="selectP">Select</p>
+            </div>
+            <!-- sellect levels -->
+            <div id="select_level" class="slide_right">
+                <div class="level buttons">
+                    <div class="l1"></div>
+                    <div class="l2 none"></div>
+                </div>
+                <div class="level buttons">
+                    <div class="l1"></div>
+                    <div class="l2"></div>
+                    <div class="l3 none"></div>
+                </div>
+                <div class="level buttons">
+                    <div class="l1"></div>
+                    <div class="l2"></div>
+                    <div class="l3"></div>
+                    <div class="l1 none"></div>
+                </div>
+            </div>
+            <!-- contact burron -->
+            <div class="slide_left">
+                <h3 id="contact_button" class="contact_button buttons">
+                    <i style="color: green" class="fas fa-envelope"></i> Contact | Report a bug <i style="color: red"
+                        class="fas fa-bug"></i></h3>
+            </div>
+
+        </div>
+        <!-- contact page -->
+        <div id="contact_window" class="contact_window">
+            <div id="submit_alert" class='spacer'></div>
+            <div class="form border slide_up">
+                <h1 class="contact_title">Report a bug</h1>
+                <!-- contact form -->
+                <div class="center-form">
+                    <form id="form" onsubmit="return sendMail(this);">
+                        <input type="text" name="name" class="form-control" id="fullname" placeholder="Name:"
+                            required />
+                        <input type="text" name="emailaddress" class="form-control" id="emailaddress"
+                            placeholder="Email:" required />
+                        <textarea rows="5" name="gameBugReport" class="form-control" id="gameBugReport"
+                            placeholder="Report a bug:" required></textarea>
+                        <button id="submit" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <!-- new game button in contacts -->
+            <div class="contact_play_new ">
+                <h3 id="button2" class="contact_button buttons slideUp">Play New Game</h3>
+            </div>
+
+        </div>
+        <!-- game over page -->
+        <div id="game-over" class="game-over">
+            <div class="spacer"></div>
+            <div class="game_over_block slide_up">
+                <h1 class="game_over_title">Game Over</h1>
+                <div class="game_over_btn1">
+                    <!-- new game button in game over page -->
+                    <h3 class="buttons contact_button" id="new_game_btn">Start New Game</h3>
+                </div>
+            </div>
+            <!-- contact button in game over page -->
+            <div class="game_over_btn2">
+                <h3 class="contact_button2  contact_button buttons" id="contact_button2">
+                    <i style="color: green" class="fas fa-envelope"></i> Contact | Report a bug <i style="color: red"
+                        class="fas fa-bug"></i></h3>
+            </div>
+        </div>
+        <!-- bottom help popup -->
+        <div id="game_help" class="border game_help">
+            <h3>Game rules</h3>
+            <ol>
+                <li>Click on squares as fast you can.</li>
+                <li>One clicked Square adds one point.</li>
+                <li>The game starts with three lives.</li>
+                <li>Each Missed target will substract one life
+                    and black object will spawn instead
+                    if clicked, ends the game altogether
+                    The black object will reset every 100p streak</li>
+                <li>A streak of 50p adds one life.</li>
+                <li>As you progress in the game, speed
+                    and target count will increase.</li>
+                <li>Score as many points as you can.</li>
+            </ol>
+            <h4>Have fun playing the game.</h4>
+        </div>
+    </div>
+    <script src="assets/js/emailjs.js"></script>
+    <script src="assets/js/help.js"></script>
+    <script src="assets/js/game.js"></script>
+</body>
+
+</html>

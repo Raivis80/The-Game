@@ -100,8 +100,10 @@ function move() {
     let num1 = Math.floor(Math.random() * 2)
     let num2 = Math.floor(Math.random() * objectCount);
     if (num1 === 0) {
+        targets[num2].style.transition = 'all 200ms linear';
         targets[num2].style.left = m + '%';
     } else if (num1 === 1) {
+        targets[num2].style.transition = 'all 200ms linear';
         targets[num2].style.top = l + '%';
     }
 }
@@ -149,14 +151,6 @@ function objects() {
 let badCount = 0;
 //bad targets position
 function badObjects() {
-    // Positions gets pushed in to array
-    // let u = 0;
-    // let posy = [];
-    // let posx = [];
-    // for (let i = 0; i < 9; i++) {       
-    //     posy.push(u += 4);
-    //     posx.push(u += 4);
-    // };
     //Positions are randomly pulled from the array, then position gets 
     //spliced from the array to avoid the next object picking the same position.
     setTimeout(() => {
@@ -258,7 +252,6 @@ function countDifference(windowClick) {
     } else {
         difference = Math.abs(clicks, windowClick);
     };
-
 }
 
 //Count target clicks

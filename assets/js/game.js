@@ -22,12 +22,12 @@ let cubes = document.getElementsByClassName('none');
 //___________________________________________|
 //This number must divide evenly with 100----|
 //_______How many points for one life________|
-pointsForLife = 50;
+pointsForLife = 20;
 //Remove Black target at 100 scorestreak points
-let removeBad = 100;
+let removeBad = 50;
 //____Every time progress number of points have been reached___|
 //Speed will increase and will add one target|
-let progressPoints = 200;
+let progressPoints = 100;
 // detect touchscreen devices https://hacks.mozilla.org/2013/04/detecting-touch-its-the-why-not-the-how/
 if ('ontouchstart' in window) {
     //starting speed for touch|
@@ -81,30 +81,31 @@ window.onload = function () {
 
 // -----------------------------TARGETS-------------------------------------------|
 // Tagtet possition for move
-let x;
-let y;
 
+let moveCount = 0;
 // Move random target 
 function move() {
-    x = [5]
-    y = [5]
+
+    let x = [5]
+    let y = [5]
     let px = 5;
     let py = 5;
     for (let i = 0; i < 5; i++) {
-
         x.push(px += 16);
         y.push(py += 16);
     };
-    let m = x[(Math.floor(Math.random() * x.length)) | 0];
-    let l = y[(Math.floor(Math.random() * y.length)) | 0];
-    let num1 = Math.floor(Math.random() * 2)
-    let num2 = Math.floor(Math.random() * objectCount);
-    if (num1 === 0) {
-        targets[num2].style.transition = 'all 200ms linear';
-        targets[num2].style.left = m + '%';
-    } else if (num1 === 1) {
-        targets[num2].style.transition = 'all 200ms linear';
-        targets[num2].style.top = l + '%';
+    if (moveCount <= objectCount) {
+        for (let h = 0; h < moveCount; h++) {
+            let m = x[(Math.floor(Math.random() * x.length)) | 0];
+            let l = y[(Math.floor(Math.random() * y.length)) | 0];
+
+            targets[h].style.transition = 'all 200ms linear';
+            targets[h].style.left = m + '%';
+            targets[h].style.top = l + '%';
+            console.log(h);
+        }
+    } else {
+        
     }
 }
 
@@ -438,6 +439,11 @@ function gameProgress() {
         speed = speed - 200; // Substract 200ms of current speed
         timing = speed - 100;
         objectCount++; // adds the target
+        
+        if (moveCount <= objectCount){
+          moveCount++;  
+        } 
+
         let listen = objectCount - 1;
         setTimeout(() => { // adds event listeners time out 
             targets[listen].addEventListener('click', addClickEvent = () => {
@@ -474,11 +480,11 @@ function levelH() {
     timer1 = setInterval(timingF, speed);
 
     function timingF() {
-            setTimeout(() => {
-                move()
-            }, devideSpeed / Math.floor(Math.random() * 4)+1);
-            objects();
-            badObjects(badCount)
+        setTimeout(() => {
+            move()
+        }, devideSpeed / Math.floor(Math.random() * 4) + 1);
+        objects();
+        badObjects(badCount)
         setTimeout(timigFunction, timing);
     }
 }

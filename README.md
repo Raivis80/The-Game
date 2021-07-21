@@ -253,18 +253,34 @@ function posotioning() {
 ***
 - In game target objects
     - Target HTML div elements in the DOM for game box targets.
-    - Two random generated integers used for position x and y coardinates to target css position properties for HTML div elements.
+    -  Positions are randomly pulled from the array, then position gets spliced from the array to avoid the next object picking the same position.
 ```JavaScript
 // append color and position for individual targets 
+//Target position in screen
 function objects() {
+    // Positions gets pushed in to array
+    let u = 0;
+    let posx = [];
+    let posy = [];
+    for (let i = 0; i < 7; i++) {
+        posx.push(u += 6);
+        posy.push(u += 6);
+    };
+    //Positions are randomly pulled from the array, then position gets 
+    //spliced from the array to avoid the next object picking the same position. 
     for (let i = 0; i < objectCount; i++) {
-        randColor = colours[(Math.random() * colours.length) | 0]
-        posotioning();
+        randColor = colours[(Math.random() * colours.length) | 0];
+
+        let m = posx[(Math.floor(Math.random() * posx.length)) | 0];
+        let l = posy[(Math.floor(Math.random() * posy.length)) | 0];
+
+        targets[i].style.left = m + '%';
+        posx.splice(posx.indexOf(m), 1);
+        targets[i].style.top = l + '%';
+        posy.splice(posy.indexOf(l), 1);
         targets[i].style.display = 'block';
-        targets[i].style.left = x;
-        targets[i].style.top = y;
         targets[i].style.backgroundColor = randColor;
-    }
+    };
 }
 ```
 ***

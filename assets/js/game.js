@@ -93,8 +93,8 @@ let h
 // get random position depending on screen size 
 function posotioning() {
 
-    x = Math.floor(Math.random() * 90);
-    y = Math.floor(Math.random() * 90);
+    x = Math.floor(Math.random() * 80);
+    y = Math.floor(Math.random() * 80);
 }
 
 function move() {
@@ -140,7 +140,6 @@ function objects() {
         targets[i].style.top = l + '%';
         posy.splice(posy.indexOf(l), 1);
         targets[i].style.display = 'block';
-        console.log('form good', posx, posy);
         targets[i].style.backgroundColor = randColor;
     };
 }
@@ -168,7 +167,6 @@ function badObjects() {
         posx.splice(posx.indexOf(m), 1);
         bad[i].style.top = l + '%';
         posy.splice(posy.indexOf(l), 1);
-        console.log('from bad', posx, posy);
         bad[i].style.backgroundColor = 'black';
     };
 }

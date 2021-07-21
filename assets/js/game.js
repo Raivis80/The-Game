@@ -92,22 +92,19 @@ let h
 
 // get random position depending on screen size 
 function posotioning() {
-    w = gameWindowElement.offsetWidth;
-    h = gameWindowElement.offsetHeight;
-    x = Math.floor(Math.random() * (w - 50)) + 'px';
-    y = Math.floor(Math.random() * (h - 50)) + 'px';
+
+    x = Math.floor(Math.random() * 90);
+    y = Math.floor(Math.random() * 90);
 }
-// let num1;
-// let num2;
+
 function move() {
-   let num1 = Math.floor(Math.random() * 2)
-   let  num2 = Math.floor(Math.random() * objectCount);
+    let num1 = Math.floor(Math.random() * 2)
+    let num2 = Math.floor(Math.random() * objectCount);
     if (num1 === 0) {
-       targets[num2].style.left = Math.floor(Math.random() * gameWindowElement.offsetWidth) + 'px';
-       console.log('this 0')
+        targets[num2].style.left = x + '%';
     } else if (num1 === 1) {
-       targets[num2].style.top = Math.floor(Math.random() * gameWindowElement.offsetHeight) + 'px';
-    }   
+        targets[num2].style.top = y + '%';
+    }
 }
 
 let bad = document.getElementsByClassName('bad');
@@ -119,28 +116,63 @@ let colours = ['red', 'royalblue', 'green'];
 //this line below from stackoverflow
 let randColor = colours[(Math.random() * colours.length) | 0]
 // append color and position for individual targets 
+
+//Target position in screen
 function objects() {
+    // Positions gets pushed in to array
+    let u = 0;
+    let posx = [];
+    let posy = [];
+    for (let i = 0; i < 7; i++) {
+        posx.push(u += 6);
+        posy.push(u += 6);
+    };
+    //Positions are randomly pulled from the array, then position gets 
+    //spliced from the array to avoid the next object picking the same position. 
     for (let i = 0; i < objectCount; i++) {
-        randColor = colours[(Math.random() * colours.length) | 0]
-        posotioning();
+        randColor = colours[(Math.random() * colours.length) | 0];
+
+        let m = posx[(Math.floor(Math.random() * posx.length)) | 0];
+        let l = posy[(Math.floor(Math.random() * posy.length)) | 0];
+
+        targets[i].style.left = m + '%';
+        posx.splice(posx.indexOf(m), 1);
+        targets[i].style.top = l + '%';
+        posy.splice(posy.indexOf(l), 1);
         targets[i].style.display = 'block';
-        targets[i].style.left = x;
-        targets[i].style.top = y;
+        console.log('form good', posx, posy);
         targets[i].style.backgroundColor = randColor;
-    }
+    };
 }
 
 let badCount = 0;
-//bad targets
+//bad targets position
 function badObjects() {
+    // Positions gets pushed in to array
+    let u = 0;
+    let posy = [];
+    let posx = [];
+    for (let i = 0; i < 7; i++) {       
+        posy.push(u += 6);
+        posx.push(u += 6);
+    };
+       //Positions are randomly pulled from the array, then position gets 
+       //spliced from the array to avoid the next object picking the same position.
     for (let i = 0; i < badCount; i++) {
-        posotioning();
+
+        let m = posx[(Math.floor(Math.random() * posx.length)) | 0];
+        let l = posy[(Math.floor(Math.random() * posy.length)) | 0];
         bad[i].style.display = 'block';
-        bad[i].style.left = x;
-        bad[i].style.top = y;
+
+        bad[i].style.left = m + '%';
+        posx.splice(posx.indexOf(m), 1);
+        bad[i].style.top = l + '%';
+        posy.splice(posy.indexOf(l), 1);
+        console.log('from bad', posx, posy);
         bad[i].style.backgroundColor = 'black';
-    }
+    };
 }
+
 // bad listeners
 function badListener() {
     badCount++;
@@ -162,7 +194,7 @@ function targetSetup() {
             targets[i].style.display = 'none';
             scoreCount = score.innerText;
             livesLogic();
-        });             
+        });
     }
 }
 

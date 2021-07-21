@@ -488,6 +488,13 @@ li {
 
 /* Landscape for mobile */
 @media only screen and (max-height: 600px) {
+
+    .target,
+    .bad {
+        width: 40px;
+        height: 40px;
+    }
+
     .game_help {
         transform: translate(-50%, 0%);
     }

@@ -80,30 +80,29 @@ window.onload = function () {
 };
 
 // -----------------------------TARGETS-------------------------------------------|
-// getting width and height numbers based on the screen size.
-// Passing width and height numbers into a random number generator to
-// get random x and y coardinates for the game objects.
-
-// Tagtet possition 
+// Tagtet possition for move
 let x;
 let y;
-let w
-let h
 
-// get random position depending on screen size 
-function posotioning() {
-
-    x = Math.floor(Math.random() * 80);
-    y = Math.floor(Math.random() * 80);
-}
-
+// Move random target 
 function move() {
+    x = [5]
+    y = [5]
+    let px = 5;
+    let py = 5;
+    for (let i = 0; i < 5; i++) {
+
+        x.push(px += 16);
+        y.push(py += 16);
+    };
+    let m = x[(Math.floor(Math.random() * x.length)) | 0];
+    let l = y[(Math.floor(Math.random() * y.length)) | 0];
     let num1 = Math.floor(Math.random() * 2)
     let num2 = Math.floor(Math.random() * objectCount);
     if (num1 === 0) {
-        targets[num2].style.left = x + '%';
+        targets[num2].style.left = m + '%';
     } else if (num1 === 1) {
-        targets[num2].style.top = y + '%';
+        targets[num2].style.top = l + '%';
     }
 }
 
@@ -116,16 +115,19 @@ let colours = ['red', 'royalblue', 'green'];
 //this line below from stackoverflow
 let randColor = colours[(Math.random() * colours.length) | 0]
 // append color and position for individual targets 
-
+let posx;
+let posy;
 //Target position in screen
 function objects() {
+    posx = [1];
+    posy = [1];
     // Positions gets pushed in to array
-    let u = 0;
-    let posx = [];
-    let posy = [];
-    for (let i = 0; i < 7; i++) {
-        posx.push(u += 6);
-        posy.push(u += 6);
+    let pushx = 0;
+    let pushy = 0;
+    for (let i = 0; i < 12; i++) {
+
+        posx.push(pushx += 7);
+        posy.push(pushy += 7);
     };
     //Positions are randomly pulled from the array, then position gets 
     //spliced from the array to avoid the next object picking the same position. 
@@ -148,27 +150,30 @@ let badCount = 0;
 //bad targets position
 function badObjects() {
     // Positions gets pushed in to array
-    let u = 0;
-    let posy = [];
-    let posx = [];
-    for (let i = 0; i < 7; i++) {       
-        posy.push(u += 6);
-        posx.push(u += 6);
-    };
-       //Positions are randomly pulled from the array, then position gets 
-       //spliced from the array to avoid the next object picking the same position.
-    for (let i = 0; i < badCount; i++) {
+    // let u = 0;
+    // let posy = [];
+    // let posx = [];
+    // for (let i = 0; i < 9; i++) {       
+    //     posy.push(u += 4);
+    //     posx.push(u += 4);
+    // };
+    //Positions are randomly pulled from the array, then position gets 
+    //spliced from the array to avoid the next object picking the same position.
+    setTimeout(() => {
+        for (let i = 0; i < badCount; i++) {
 
-        let m = posx[(Math.floor(Math.random() * posx.length)) | 0];
-        let l = posy[(Math.floor(Math.random() * posy.length)) | 0];
-        bad[i].style.display = 'block';
+            let m = posx[(Math.floor(Math.random() * posx.length)) | 0];
+            let l = posy[(Math.floor(Math.random() * posy.length)) | 0];
+            bad[i].style.display = 'block';
 
-        bad[i].style.left = m + '%';
-        posx.splice(posx.indexOf(m), 1);
-        bad[i].style.top = l + '%';
-        posy.splice(posy.indexOf(l), 1);
-        bad[i].style.backgroundColor = 'black';
-    };
+            bad[i].style.left = m + '%';
+            posx.splice(posx.indexOf(m), 1);
+            bad[i].style.top = l + '%';
+            posy.splice(posy.indexOf(l), 1);
+            bad[i].style.backgroundColor = 'black';
+        };
+    }, 20)
+
 }
 
 // bad listeners
@@ -470,15 +475,17 @@ function startTheGame() {
     levelH(speed);
 }
 
+let devideSpeed = (speed / 4) * 3;
+
 function levelH() {
     timer1 = setInterval(timingF, speed);
 
     function timingF() {
-        setTimeout(() => {
-            move()
-        }, speed / 2);
-        objects();
-        badObjects(badCount)
+            setTimeout(() => {
+                move()
+            }, devideSpeed / Math.floor(Math.random() * 4)+1);
+            objects();
+            badObjects(badCount)
         setTimeout(timigFunction, timing);
     }
 }

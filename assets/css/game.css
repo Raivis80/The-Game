@@ -467,12 +467,6 @@ li {
 /*-----mobile breakpoints-------*/
 @media only screen and (max-width: 500px) {
 
-    .target,
-    .bad {
-        width: 40px;
-        height: 40px;
-    }
-
     .speed,
     .score1,
     .score2,
@@ -488,12 +482,6 @@ li {
 
 /* Landscape for mobile */
 @media only screen and (max-height: 600px) {
-
-    .target,
-    .bad {
-        width: 40px;
-        height: 40px;
-    }
 
     .game_help {
         transform: translate(-50%, 0%);
@@ -544,3 +532,25 @@ li {
     }
 
 }
+
+/* Media screen for target sizes */
+
+@media only screen and (max-width: 500px),
+(max-height: 500px) {
+
+    .target,
+    .bad {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* @media only screen and (max-width: 380px),
+(max-height: 380px) {
+
+    .target,
+    .bad {
+        width: 30px;
+        height: 30px;
+    }
+} */

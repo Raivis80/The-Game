@@ -1,6 +1,7 @@
 //------------------------------START SCREEN-------------------------------------|
 const startGameElement = document.getElementById('start_game');
 const speedElement = document.getElementById('speed');
+const gameWindowElement = document.getElementById('game_window');
 // Start screen Effect
 const startChild2 = document.getElementById('start_game').children[1].style.margin = '0%';
 const startChild3 = document.getElementById('start_game').children[2].style.margin = '0%';
@@ -105,9 +106,12 @@ function move() {
             console.log(h);
         }
     } else {
-        
+
     }
 }
+
+w = gameWindowElement.offsetWidth;
+h = gameWindowElement.offsetHeight;
 
 let bad = document.getElementsByClassName('bad');
 let targets = document.getElementsByClassName('target');
@@ -127,11 +131,42 @@ function objects() {
     // Positions gets pushed in to array
     let pushx = 0;
     let pushy = 0;
-    for (let i = 0; i < 12; i++) {
 
-        posx.push(pushx += 7);
-        posy.push(pushy += 7);
-    };
+    let theNum = 9;
+    let theNum2 = 12;
+    if (badCount + objectCount > theNum){
+        theNum = badCount + objectCount
+    }
+
+    if (badCount + objectCount > theNum2) {
+        theNum2 = badCount + objectCount
+    }
+
+
+    if (w < 500) {
+        for (let i = 0; i < theNum2; i++) {
+            posy.push(pushy += 7);
+        };
+        for (let i = 0; i < theNum; i++) {
+            posx.push(pushx += 10);
+
+        };
+
+    } else if (h < 500) {
+        for (let i = 0; i < theNum; i++) {
+            posx.push(pushx += 10);
+        };
+        for (let i = 0; i < theNum2; i++) {
+            posy.push(pushy += 7);
+        };
+
+    } else {
+        for (let i = 0; i < theNum2; i++) {
+            posx.push(pushx += 7);
+            posy.push(pushy += 7);
+        };
+    }
+
     //Positions are randomly pulled from the array, then position gets 
     //spliced from the array to avoid the next object picking the same position. 
     for (let i = 0; i < objectCount; i++) {
@@ -287,7 +322,7 @@ function missedEffect() {
 }
 
 //----------------------------GAME WINDOW-----------------------------------------|
-const gameWindowElement = document.getElementById('game_window');
+
 let detectWindowEvents;
 // detect game window clicks
 function gameWindow() {
@@ -439,10 +474,10 @@ function gameProgress() {
         speed = speed - 200; // Substract 200ms of current speed
         timing = speed - 100;
         objectCount++; // adds the target
-        
-        if (moveCount <= objectCount){
-          moveCount++;  
-        } 
+
+        if (moveCount <= objectCount) {
+            moveCount++;
+        }
 
         let listen = objectCount - 1;
         setTimeout(() => { // adds event listeners time out 

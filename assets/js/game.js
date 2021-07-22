@@ -112,6 +112,7 @@ function move() {
 
 w = gameWindowElement.offsetWidth;
 h = gameWindowElement.offsetHeight;
+console.log(w, h)
 
 let bad = document.getElementsByClassName('bad');
 let targets = document.getElementsByClassName('target');
@@ -145,25 +146,25 @@ function objects() {
 
     if (w < 500) {
         for (let i = 0; i < theNum2; i++) {
-            posy.push(pushy += 7);
+            posy.push(pushy += 7.2);
         };
         for (let i = 0; i < theNum; i++) {
-            posx.push(pushx += 10);
+            posx.push(pushx += 9.5);
 
         };
 
     } else if (h < 500) {
         for (let i = 0; i < theNum; i++) {
-            posx.push(pushx += 10);
+            posx.push(pushx += 9.5);
         };
         for (let i = 0; i < theNum2; i++) {
-            posy.push(pushy += 7);
+            posy.push(pushy += 7.2);
         };
 
     } else {
         for (let i = 0; i < theNum2; i++) {
-            posx.push(pushx += 7);
-            posy.push(pushy += 7);
+            posx.push(pushx += 7.2);
+            posy.push(pushy += 7.2);
         };
     }
 

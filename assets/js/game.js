@@ -20,16 +20,16 @@ let timing;
 let speedScore;
 let pointsForLife;
 let cubes = document.getElementsByClassName('none');
-//___________________________________________|
-//This number must divide evenly with 100----|
-//_______How many points for one life________|
+
+//_______GAME CONTROLS________|
 pointsForLife = 20;
-//Remove Black target at 100 scorestreak points
+//Remove Black target points
 let removeBad = 50;
-//____Every time progress number of points have been reached___|
-//Speed will increase and will add one target|
-let progressPoints = 100;
-// detect touchscreen devices https://hacks.mozilla.org/2013/04/detecting-touch-its-the-why-not-the-how/
+//Progress controls|
+let addTargetPoints = 50;
+let moveTaargetPoints = 100;
+let sppedProgress = 100;
+// detect touchscreen devices
 if ('ontouchstart' in window) {
     //starting speed for touch|
     speed = 2800;
@@ -105,8 +105,6 @@ function move() {
             targets[h].style.top = l + '%';
             console.log(h);
         }
-    } else {
-
     }
 }
 
@@ -467,23 +465,26 @@ function timigFunction() {
     notClick = 0;
 }
 
+
 //----------------------GAME PROGRESS SPEED INCREASE------------------------------| 
 
+let targetScore = addTargetPoints;
+let targetPoints = moveTaargetPoints;
 //Progress multiplier
 //adds a target if set points are reached
 
 function gameProgress() {
-    if (progressPoints == score.innerText && objectCount <= 12) {
-        progressPoints = progressPoints + speedScore;
+   
+    if (sppedProgress == score.innerText) {
+        sppedProgress = sppedProgress + speedScore;
         speed = speed - 200; // Substract 200ms of current speed
-        timing = speed - 100;
-        objectCount++; // adds the target
-
-        if (moveCount <= objectCount) {
-            moveCount++;
-        }
-
-        let listen = objectCount - 1;
+        timing = speed - 100;      
+    }
+   
+    if (addTargetPoints == score.innerText && objectCount <= 12) {
+       addTargetPoints = addTargetPoints + targetScore;
+        objectCount++; // adds the target     
+        let listen = objectCount - 1;       
         setTimeout(() => { // adds event listeners time out 
             targets[listen].addEventListener('click', addClickEvent = () => {
                 targets[listen].style.display = 'none';
@@ -491,6 +492,13 @@ function gameProgress() {
                 livesLogic();
             });
         }, 20); // time out is set for 20 ms
+    }
+
+    if (moveTaargetPoints == score.innerText && objectCount <= 12) {
+        moveTaargetPoints = moveTaargetPoints + targetPoints
+         if (moveCount <= objectCount) {
+             moveCount++;
+         }
     }
 }
 
@@ -501,7 +509,7 @@ let timer1;
 //timing for target check
 timing = speed - 100;
 //multiples score|
-speedScore = progressPoints;
+speedScore = sppedProgress;
 
 //Game setup-------------|
 function startTheGame() {

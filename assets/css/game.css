@@ -544,13 +544,3 @@ li {
         height: 40px;
     }
 }
-
-/* @media only screen and (max-width: 380px),
-(max-height: 380px) {
-
-    .target,
-    .bad {
-        width: 30px;
-        height: 30px;
-    }
-} */

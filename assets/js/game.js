@@ -132,42 +132,45 @@ function objects() {
     // Positions gets pushed in to array
     let pushx = 0;
     let pushy = 0;
-
     let theNum = 9;
+    let a = 87 / theNum;
+
     let theNum2 = 12;
+    let b = 92 / theNum2;
+
     if (badCount + objectCount > theNum){
         theNum = badCount + objectCount
+        a = 87 / theNum;
     }
 
     if (badCount + objectCount > theNum2) {
         theNum2 = badCount + objectCount
+        b = 92 / theNum2;
     }
-
 
     if (w < 500) {
         for (let i = 0; i < theNum2; i++) {
-            posy.push(pushy += 7.2);
+            posy.push(pushy += b);
         };
         for (let i = 0; i < theNum; i++) {
-            posx.push(pushx += 9.5);
+            posx.push(pushx += a);
 
         };
 
     } else if (h < 500) {
         for (let i = 0; i < theNum; i++) {
-            posx.push(pushx += 9.5);
+            posx.push(pushx += a);
         };
         for (let i = 0; i < theNum2; i++) {
-            posy.push(pushy += 7.2);
+            posy.push(pushy += b);
         };
 
     } else {
         for (let i = 0; i < theNum2; i++) {
-            posx.push(pushx += 7.2);
-            posy.push(pushy += 7.2);
+            posx.push(pushx += b);
+            posy.push(pushy += b);
         };
     }
-
     //Positions are randomly pulled from the array, then position gets 
     //spliced from the array to avoid the next object picking the same position. 
     for (let i = 0; i < objectCount; i++) {

@@ -22,13 +22,13 @@ let pointsForLife;
 let cubes = document.getElementsByClassName('none');
 
 //_______GAME CONTROLS________|
-pointsForLife = 20;
+pointsForLife = 50;
 //Remove Black target points
-let removeBad = 50;
+let removeBad = 100;
 //Progress controls|
-let addTargetPoints = 50;
+let addTargetPoints = 200;
 let moveTaargetPoints = 100;
-let sppedProgress = 100;
+let sppedProgress = 500;
 // detect touchscreen devices
 if ('ontouchstart' in window) {
     //starting speed for touch|
@@ -110,8 +110,6 @@ function move() {
 
 w = gameWindowElement.offsetWidth;
 h = gameWindowElement.offsetHeight;
-console.log(w, h)
-
 let bad = document.getElementsByClassName('bad');
 let targets = document.getElementsByClassName('target');
 //target object count
@@ -125,8 +123,8 @@ let posx;
 let posy;
 //Target position in screen
 function objects() {
-    posx = [1];
-    posy = [1];
+    posx = [2];
+    posy = [2];
     // Positions gets pushed in to array
     let pushx = 0;
     let pushy = 0;
@@ -134,11 +132,11 @@ function objects() {
     let a = 87 / theNum;
 
     let theNum2 = 12;
-    let b = 92 / theNum2;
+    let b = 86 / theNum2;
 
     if (badCount + objectCount > theNum){
         theNum = badCount + objectCount
-        a = 87 / theNum;
+        a = 85 / theNum;
     }
 
     if (badCount + objectCount > theNum2) {
@@ -146,22 +144,22 @@ function objects() {
         b = 92 / theNum2;
     }
 
-    if (w < 500) {
+    if (w < 540) {
         for (let i = 0; i < theNum2; i++) {
             posy.push(pushy += b);
         };
         for (let i = 0; i < theNum; i++) {
             posx.push(pushx += a);
-
         };
-
-    } else if (h < 500) {
+    } else if (h < 540) {
+        
         for (let i = 0; i < theNum; i++) {
             posx.push(pushx += a);
         };
         for (let i = 0; i < theNum2; i++) {
             posy.push(pushy += b);
         };
+    
 
     } else {
         for (let i = 0; i < theNum2; i++) {

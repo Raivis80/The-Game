@@ -22,11 +22,11 @@ let pointsForLife;
 let cubes = document.getElementsByClassName('none');
 
 //_______GAME CONTROLS________|
-pointsForLife = 50;
+pointsForLife = 25;
 //Remove Black target points
 let removeBad = 100;
 //Progress controls|
-let addTargetPoints = 200;
+let addTargetPoints = 250;
 let moveTaargetPoints = 100;
 let sppedProgress = 500;
 // detect touchscreen devices
@@ -134,7 +134,7 @@ function objects() {
     let theNum2 = 12;
     let b = 86 / theNum2;
 
-    if (badCount + objectCount > theNum){
+    if (badCount + objectCount > theNum) {
         theNum = badCount + objectCount
         a = 85 / theNum;
     }
@@ -152,14 +152,14 @@ function objects() {
             posx.push(pushx += a);
         };
     } else if (h < 540) {
-        
+
         for (let i = 0; i < theNum; i++) {
             posx.push(pushx += a);
         };
         for (let i = 0; i < theNum2; i++) {
             posy.push(pushy += b);
         };
-    
+
 
     } else {
         for (let i = 0; i < theNum2; i++) {
@@ -200,7 +200,7 @@ function badObjects() {
             posx.splice(posx.indexOf(m), 1);
             bad[i].style.top = l + '%';
             posy.splice(posy.indexOf(l), 1);
-            bad[i].style.backgroundColor = 'black';
+            bad[i].style.backgroundColor = 'gray';
         };
     }, 20)
 
@@ -209,9 +209,14 @@ function badObjects() {
 // bad listeners
 function badListener() {
     badCount++;
-    bad[badCount - 1].addEventListener('click', clickEvent = () => {
-        stopTheGame()
-    });
+    setTimeout(() => {
+        for (let i = 0; i < badCount; i++)
+            bad[i].addEventListener('click', clickEvent = () => {
+               bad[i].style.display = 'none';
+                scoreCount = score.innerText;
+                livesLogic();
+            })
+    }, 20);
 } //remove bad listener
 function removeBadListener() {
     badCount--;
@@ -410,6 +415,7 @@ function addLife() {
 
 // Deduct one life if the target is missed
 function deductLife() {
+    livesCount;
     if (livesCount == 2) {
         missedEffect();
         lives[0].style.backgroundColor = 'oldlace';
@@ -452,7 +458,13 @@ function timigFunction() {
             badListener();
             scoreMissed.innerText++;
         }
-    if (notClick >= 3 && objectCount >= 3) {
+    for (let i = 0; i < bad.length; i++)
+        if (bad[i].style.display === 'block') {
+            notClick++;
+            badListener();
+            scoreMissed.innerText++;
+        }
+    if (notClick >= 3 && objectCount + badCount >= 3) {
         missedEffect();
         setTimeout(stopTheGame, 30);
     } else if (notClick == 2 || notClick == 1) {
@@ -472,17 +484,17 @@ let targetPoints = moveTaargetPoints;
 //adds a target if set points are reached
 
 function gameProgress() {
-   
+
     if (sppedProgress == score.innerText) {
         sppedProgress = sppedProgress + speedScore;
         speed = speed - 200; // Substract 200ms of current speed
-        timing = speed - 100;      
+        timing = speed - 100;
     }
-   
+
     if (addTargetPoints == score.innerText && objectCount <= 12) {
-       addTargetPoints = addTargetPoints + targetScore;
+        addTargetPoints = addTargetPoints + targetScore;
         objectCount++; // adds the target     
-        let listen = objectCount - 1;       
+        let listen = objectCount - 1;
         setTimeout(() => { // adds event listeners time out 
             targets[listen].addEventListener('click', addClickEvent = () => {
                 targets[listen].style.display = 'none';
@@ -494,9 +506,9 @@ function gameProgress() {
 
     if (moveTaargetPoints == score.innerText && objectCount <= 12) {
         moveTaargetPoints = moveTaargetPoints + targetPoints
-         if (moveCount <= objectCount) {
-             moveCount++;
-         }
+        if (moveCount <= objectCount) {
+            moveCount++;
+        }
     }
 }
 

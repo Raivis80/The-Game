@@ -146,12 +146,11 @@ The game needs enable player to:
     -  Enables players to see current game speed in seconds.
 - Lives Remaining
     - If a player misses the box target, you lose one life, but once a score of 50 has been, reached players will gain one life.
-- Black target
-    - If a player misses the target the black object will spawn instead, if clicked, ends the game altogether
-    - The black object will reset if 100 streaks are achieved
+- Gray target
+    - If a player misses the target the Gray object will spawn instead,
+    - The Gray object will reset if 100p streaks are achieved
 - Game-level-Up
-    - Gain 200p points in the game to enable a player to go up to a higher level.
-    - Speed and target count are increasing throughout the game.
+    - The game is full of surprises various events and effects happened as you progress in the game
 ### **Game Information Popup** 
 
 `Info popup screenshot` [Here](project_files/features/desktop-info.PNG)
@@ -182,8 +181,8 @@ After user testing, here are some of the suggested future features to implement 
 1. Game Play
     - Select a difficulty level to start the game.
     - Click or tap on target objects once they spawn.
-    - As you progress in the game, target count will increase along with speed
-    - If a player misses the target, the black object will spawn instead, if clicked, ends the game altogether
+    - As you progress in the game, target count will increase along with speed and target sliding as well
+    - If a player misses the target, the black object will spawn instead, that will reset every 100point scorestreak
 1. Select Level 
     - Touch-enabled devices start with higher speed.
     - Levels for mobile devices  = "Easy" Start with one target, "Medium" start with two targets "Hard" start with three targets.
@@ -208,263 +207,42 @@ After user testing, here are some of the suggested future features to implement 
     - Levels for PC's devices  = "Easy" Start with two targets, "Medium" start with three targets "Hard" start with four targets.
         - Level target count and speed could be set in the game.js file 
 
-Following is to detect touch devices & add one extra target for touch-enabled devices & and set speed 
-```JavaScript 
-if ('ontouchstart' in window) { //<-Detect Touch devices
-         speed = 2800; // <-Set game starting speed and everything else will change dynamically
-        for (cube of cubes) {//<-IIf Touchscreen device detected, select level buttons show extra cube for consistency  
-        cube.style.display = 'block';
-        cube++ 
-        }
-    } else {
-    //starting speed pc|
-    speed = 3000; //<-Starting speed, with pointing devices
-}
-
-Starting Target count 
-        if ('ontouchstart' in window) {
-            objectCount = 4; //<-If Touchscreen device detected start with four targets  everything else, will change dynamically
-        } else {
-            objectCount = 3; //Else start with 3
-        }
-        startTheGame();
-```
 ***
 - Lives Remaining
     - Based on capture and click events, all Unsuccessful clicks and missed on-time events will disable one life element.
     - Based on the Score counter, every 50 score points will create one life. Enable one life element (if statement)
-```JavaScript
-//Set this to adjust How many points will add one life, This number must divide evenly with 100
-pointsForLife = 50;
-```
+
 ***
 - Random Number generator
     - Extract Window height and width.
     - Create random number integer of a current window width and height.
-```JavaScript
-// get random position depending on screen size 
-function posotioning() {
-    w = gameWindowElement.offsetWidth;
-    h = gameWindowElement.offsetHeight;
-    x = Math.floor(Math.random() * (w - 50)) + 'px';
-    y = Math.floor(Math.random() * (h - 50)) + 'px';
-}
-```
+
 ***
 - In game target objects
     - Target HTML div elements in the DOM for game box targets.
     -  Positions are randomly pulled from the array, then position gets spliced from the array to avoid the next object picking the same position.
-```JavaScript
-// append color and position for individual targets 
-//Target position in screen
-function objects() {
-    // Positions gets pushed in to array
-    let u = 0;
-    let posx = [];
-    let posy = [];
-    for (let i = 0; i < 7; i++) {
-        posx.push(u += 6);
-        posy.push(u += 6);
-    };
-    //Positions are randomly pulled from the array, then position gets 
-    //spliced from the array to avoid the next object picking the same position. 
-    for (let i = 0; i < objectCount; i++) {
-        randColor = colours[(Math.random() * colours.length) | 0];
 
-        let m = posx[(Math.floor(Math.random() * posx.length)) | 0];
-        let l = posy[(Math.floor(Math.random() * posy.length)) | 0];
-
-        targets[i].style.left = m + '%';
-        posx.splice(posx.indexOf(m), 1);
-        targets[i].style.top = l + '%';
-        posy.splice(posy.indexOf(l), 1);
-        targets[i].style.display = 'block';
-        targets[i].style.backgroundColor = randColor;
-    };
-}
-```
 ***
 - Click event listeners and capture events.
     - Create event listeners for game targets that will record successful clicks and disable target once clicked. If not will take away one life
-```JavaScript
-//target event listeners + styling once clickeed display none is set
-function targetSetup() {
-    for (let i = 0; i < objectCount; i++) {
-        livesDivElement.style.transition = ".6s";
-        targets[i].addEventListener('click', clickEvent = () => {
-            targets[i].style.display = 'none';
-            scoreCount = score.innerText;
-            livesLogic();
-        })
-    }
-}
 
-```
 ***
-- The Following is to detect unsuccessful clicks. I have added an event listener for the game window to record missed clicks, and I have added a flash effect for visual warning.
-```JavaScript
-//miss target Flash efect
-function missedEffect() {
-    gameWindowElement.style.backgroundColor = 'rgba(255, 0, 0, 0.2)';
-    setTimeout(resetEffect, 20);
+- Capture events on all failed click attempts. I managed to achieve this by counting how many objects at the end of setInterval() cycle has display: none;  
 
-    function resetEffect() {
-        gameWindowElement.style.backgroundColor = 'oldlace';
-    }
-}
-
-// detect game window clicks
-function gameWindow() {
-    // Game window mousedown listener
-    gameWindowElement.addEventListener('click', detectWindowEvents);
-
-    function detectWindowEvents(event) {
-        //Prevent click event trigger on child elements.                                    
-        if (this === event.target) {
-            missedEffect();
-            clicks = 0;
-            streak2 = 0;
-            streak1 = 0;
-            livesCount--;
-            badListener()
-            scoreMissed.innerText++;
-            countDifference();
-            deductLife()
-            livesDivElement.style.width = '0';
-            gameWindowElement.style.backgroundColor = 'rgba(255, 0, 0, 0.2)';
-        };
-    };
-
-}
-
-```
-***
-- Capture events on all failed click attempts. I managed to achieve this by counting how many objects at the end of setInterval() cycle has display: none; 
-```JavaScript
-//Timing for target check if display none count is less than initial target count then it will be, sent to not click() function, for calculation
-let notClick = 0;
-function timigFunction() {
-    
-    notClick = 0;
-    for (let i = 0; i < targets.length; i++)
-        if (targets[i].style.display === 'block') {
-            notClick++;
-        }
-    if (notClick >= 3 && objectCount >= 3) {
-        stopTheGame();
-    } else if (notClick == 2 || notClick == 1) {
-        livesCount = livesCount - notClick;
-        deductLife()
-    }
-    console.log(livesCount)
-    notClick = 0;
-}
-```
-***
-- The following is the logic to Deduct life/lives if missed target/s 
-```javascript
-// Deduct one life if the target is missed
-function deductLife() {
-    if (livesCount == 2) {
-        missedEffect();
-        lives[0].style.backgroundColor = 'oldlace';
-        livesDivElement.style.width = '0'
-        clicks = 0;
-        difference = 0;
-        scoreStreak.innerText = 0;
-        streak2 = 0;
-        streak1 = 0;
-
-    } else if (livesCount == 1) {
-        missedEffect();
-        lives[0].style.backgroundColor = 'oldlace';
-        lives[1].style.backgroundColor = 'oldlace';
-        livesDivElement.style.width = '0';
-        clicks = 0;
-        difference = 0;
-        scoreStreak.innerText = 0;
-        streak2 = 0;
-        streak1 = 0;
-
-    } else if (livesCount <= 0) {
-        missedEffect();
-        setTimeout(stopTheGame, 30);
-    }
-}
-```
 ***
 - Game setup
     - Based on Level selection. if "EASY", else if "MEDIUM", else if "HARD".
     - Level variable will be passed into the setInterval() function and will launch the game.
-```JavaScript
-// The game setup adds listeners and so on
-function startTheGame() { 
-    startGameElement.style.display = 'none';
-    livesDivElement.style.width = '100%';
-    levelsElement.style.display = 'none';
-    gameWindow();
-    targetSetup();
-    levelH(speed);
-}
 
-function levelH(speed) {
-    timer1 = setInterval(timingF, speed);//<-This set interval method Timing for game loop is' set dynamically 
-    function timingF() { //<-The game set interval loop function.
-        objects(); //<-Targets
-        setTimeout(timigFunction, timing, ); //<-The timeout method to check the remaining target's timing is just at the end of the set interval time.
-    }
-}
-```
 ***
 - Game Progress levels
     - Speed will increase over, course of the game. 
     - Target count will increase over, course of the game.
-    - Create setInterval() function passing, it into game level selection once desired score is, reached.
-```JavaScript
-//Set this to increase progress speed add targets as you like here
-// points needed for progress
-let progressPoints = 200;
-//Speed progress multiplier
-// adds an object on progress
-function gameProgress() {
-    if (progressPoints == score.innerText && objectCount <= 12) {
-        progressPoints = progressPoints + speedScore;
-        speed = speed - 200;
-        timing = speed - 100;
-        objectCount++; //< adds one target once every point is set for progress
-        let listen = objectCount - 1;
-        setTimeout(() => {
-            targets[listen].addEventListener('click', addClickEvent = () => {
-                targets[listen].style.display = 'none';
-                scoreCount = score.innerText;
-                livesLogic();
-            });
-        }, 20);
-    }
-}
-```
+    - As you progress in the game the objects move-effect will be added at a certain point count.
+`
 ***
-- If a player misses the target,  one life will be deducted and a black object will spawn instead, if clicked, ends the game altogether. Black object will resset if 100 point streak reached.
-```javascript
-//bad targets
-function badObjects() {
-    for (let i = 0; i < badCount; i++) {
-        posotioning();
-        bad[i].style.display = 'block';
-        bad[i].style.left = x;
-        bad[i].style.top = y;
-        bad[i].style.backgroundColor = 'black';
-    }
-}
-// bad listeners
-function badListener() {
-    badCount++;
-    console.log(bad.length, badCount)
-    bad[badCount - 1].addEventListener('click', clickEvent = () => {
-        stopTheGame()
-    });
-} //remove bad listener
-```
+- If a player misses the target,  one life will be deducted and a gray object will spawn instead, Gray object will resset if 100 point streak reached.
+
 # [&#8686;](#Top)
 ## **Technologies and Frameworks**
 ### **Languages**

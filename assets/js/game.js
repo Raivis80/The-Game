@@ -1,6 +1,7 @@
 //------------------------------START SCREEN-------------------------------------|
 const startGameElement = document.getElementById('start_game');
 const speedElement = document.getElementById('speed');
+const speedMeter = document.getElementById('speed_inner');
 const gameWindowElement = document.getElementById('game_window');
 // Start screen Effect
 const startChild2 = document.getElementById('start_game').children[1].style.margin = '0%';
@@ -217,7 +218,9 @@ function badListener() {
                 livesLogic();
             })
     }, 20);
-} //remove bad listener
+} 
+
+//remove bad listener
 function removeBadListener() {
     badCount--;
     bad[badCount].style.display = 'none';
@@ -235,7 +238,6 @@ function targetSetup() {
         });
     }
 }
-
 //Add target event listeners to the targets
 function addTargetListeners() {
     for (let i = 0; i < objectCount; i++) {
@@ -364,7 +366,7 @@ let life3 = livesElement.children[2];
 
 livesDivElement.style.width = '100%';
 livesDivElement.style.backgroundColor = 'green';
-
+speedMeter.style.backgroundColor = 'red';
 // get lives a color
 let lives = document.getElementsByClassName('life');
 let colourLives = ['green', 'red', 'royalblue']
@@ -442,6 +444,23 @@ function deductLife() {
         setTimeout(stopTheGame, 30);
     }
 }
+//Speed Meter
+
+let speedMeterF = ()=>{
+    let widthH = 0;
+    speedMeter.style.width = '0%'
+    let task = (b) => {
+        setTimeout(() => {
+             widthH++;
+             speedMeter.style.width = widthH + '%';
+        }, (speed / 100) * b)
+    }
+
+    for (let b = 0; b < 100; b++) {
+        task(b)
+    }
+    
+}
 
 //------------------------------MISSED TARGET LOGIC-------------------------------|
 
@@ -511,7 +530,6 @@ function gameProgress() {
         }
     }
 }
-
 //------------------------------GAME SELLECT--------------------------------------|
 // Timmer variables 
 let timer1;
@@ -537,11 +555,12 @@ function levelH() {
     timer1 = setInterval(timingF, speed);
 
     function timingF() {
+        speedMeterF();
         setTimeout(() => {
-            move()
+            move();
         }, devideSpeed / Math.floor(Math.random() * 4) + 1);
         objects();
-        badObjects(badCount)
+        badObjects(badCount);
         setTimeout(timigFunction, timing);
     }
 }

@@ -1,6 +1,5 @@
 //------------------------------START SCREEN-------------------------------------|
 const startGameElement = document.getElementById('start_game');
-const speedElement = document.getElementById('speed');
 const speedMeter = document.getElementById('speed_inner');
 const gameWindowElement = document.getElementById('game_window');
 // Start screen Effect
@@ -215,7 +214,6 @@ function badListener() {
             bad[i].addEventListener('click', clickEvent = () => {
                bad[i].style.display = 'none';
                 scoreCount = score.innerText;
-                livesLogic();
             })
     }, 20);
 } 
@@ -299,7 +297,6 @@ function countDifference(windowClick) {
 
 //Count target clicks
 function livesLogic() {
-    speedElement.children[0].innerText = `${speed  / 1000}s`;
     score.innerText++;
     clicks++;
     streak1++;
@@ -366,7 +363,7 @@ let life3 = livesElement.children[2];
 
 livesDivElement.style.width = '100%';
 livesDivElement.style.backgroundColor = 'green';
-speedMeter.style.backgroundColor = 'red';
+speedMeter.style.backgroundColor = '';
 // get lives a color
 let lives = document.getElementsByClassName('life');
 let colourLives = ['green', 'red', 'royalblue']

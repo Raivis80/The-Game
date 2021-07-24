@@ -115,9 +115,11 @@ let targets = document.getElementsByClassName('target');
 //target object count
 let objectCount;
 // Trarget Colors
+
 let colours = ['red', 'royalblue', 'green'];
+
 //this line below from stackoverflow
-let randColor = colours[(Math.random() * colours.length) | 0]
+let randColor = colours[(Math.random() * colours.length) | 1]
 // append color and position for individual targets 
 let posx;
 let posy;
@@ -212,11 +214,11 @@ function badListener() {
     setTimeout(() => {
         for (let i = 0; i < badCount; i++)
             bad[i].addEventListener('click', clickEvent = () => {
-               bad[i].style.display = 'none';
+                bad[i].style.display = 'none';
                 scoreCount = score.innerText;
             })
     }, 20);
-} 
+}
 
 //remove bad listener
 function removeBadListener() {
@@ -443,20 +445,20 @@ function deductLife() {
 }
 //Speed Meter
 
-let speedMeterF = ()=>{
+let speedMeterF = () => {
     let widthH = 0;
     speedMeter.style.width = '0%'
     let task = (b) => {
         setTimeout(() => {
-             widthH++;
-             speedMeter.style.width = widthH + '%';
+            widthH++;
+            speedMeter.style.width = widthH + '%';
         }, (speed / 100) * b)
     }
 
     for (let b = 0; b < 100; b++) {
         task(b)
     }
-    
+
 }
 
 //------------------------------MISSED TARGET LOGIC-------------------------------|
@@ -571,6 +573,7 @@ function stopTheGame() {
     document.getElementById('contact_button2').addEventListener('click', contactPage);
     document.getElementById('new_game_btn').addEventListener('click', pageReload1);
     gameWindowElement.removeEventListener('mousedown', detectWindowEvents);
+
     for (let i = 0; i < badCount; i++) {
         bad[i].style.display = 'none';
         bad[i].removeEventListener('click', clickEvent = () => {});
@@ -581,6 +584,7 @@ function stopTheGame() {
     lives[1].style.backgroundColor = 'oldlace';
     lives[2].style.backgroundColor = 'oldlace';
     contactWindow.style.display = 'none';
+    speedMeter.style.display = 'none'
     speed = speed * 1000;
     livesDivElement.style.width = '0';
     gameOverElement.style.display = 'flex';

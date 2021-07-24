@@ -63,9 +63,10 @@ html {
 }
 
 .speed {
-    height: 12px;
+    margin-top: 6px;
+    height: 15px;
     width: 100%;
-    color: red;
+
     background: linear-gradient(to right, green 80%, red 20%);
 }
 
@@ -78,25 +79,39 @@ html {
 }
 
 #speed_inner {
-    width: 100%;
+    width: 0%;
 }
-
+.speed .p {
+    padding: 0 3px;
+    letter-spacing: 2px;
+    color: green;
+    margin-top: -12px;
+    font-size: .5rem;
+}
+.p1 {
+    padding-left: 4.5px;
+    color: 	black;
+    letter-spacing: 2px;
+    margin-top: -8px;
+    font-size: .3rem;
+}
 .gauge {
+    border-radius: 3px;
     z-index: 1;
-    height: 30px;
-    margin-top: -5px;
+    height: 23px;
+    margin: -2px 1px 0 1px;
     width: 2px;
     background-color: black;
 }
 
 .speed_outer {
-    padding: 0 0 10px 0;
+    padding: 0 0 5px 0;
     box-sizing: border-box;
     height: 2rem;
     width: 3.5rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: space-around;
     background-color: oldlace;
 
 }

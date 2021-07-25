@@ -194,8 +194,8 @@ function badObjects() {
     setTimeout(() => {
         for (let i = 0; i < badCount; i++) {
 
-            let m = posx[(Math.floor(Math.random() * posx.length)) | 0];
-            let l = posy[(Math.floor(Math.random() * posy.length)) | 0];
+            let m = posx[(Math.floor(Math.random() * posx.length)) | Math.floor(Math.random() * posx.length)];
+            let l = posy[(Math.floor(Math.random() * posy.length)) | Math.floor(Math.random() * posy.length)];
             bad[i].style.display = 'block';
 
             bad[i].style.left = m + '%';

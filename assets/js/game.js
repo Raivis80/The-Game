@@ -98,28 +98,44 @@ let randColor = colours[(Math.random() * colours.length) | Math.random() * colou
 
 //Positions are randomly pulled from the array, then position gets 
 
-let num = 0;
-let num1 = 0;
-let arr = []
-let arr1 = []
-
-for (let i = 0; i < 9; i++) {
-    arr.push(num += 9)
-    arr1.push(num1 += 9)
-}
-
+let arr = [2]
+let arr1 = [2]
 let arr3 = [];
-for (a in arr) {
-    for (b in arr1) {
-        if (arr[a] != arr[b]) {
-            arr3.push([arr[a], arr[b]])
 
+function arrays() {
+    let num = 0;
+    let num1 = 0;
+    let arr1 = []
+    if (w < 540 || h < 540) {
+        let num3 = 87 / 6
+        for (let i = 0; i < 6; i++) {
+            arr.push(num += num3)
+            arr1.push(num1 += num3)
+        }
+    } else {
+        let num4 = 87 / 9
+         
+        for (let i = 0; i < 9; i++) {
+           
+            arr.push(num += 9)
+            arr1.push(num1 += 9)
         }
     }
+
+    for (a in arr) {
+        for (b in arr1) {
+            if (arr[a] != arr[b]) {
+                arr3.push([arr[a], arr[b]])
+
+            }
+        }
+    }
+
 }
+arrays()
 let arr2 = arr3.sort(() => .5 - Math.random());
 let newthis;
-
+console.log(arr3)
 class targetBase {
     constructor(x, y) {
         this.x = x + '%';
@@ -166,18 +182,18 @@ function objects() {
     };
     // Move random target 
     if (moveCount > 0 && moveCount <= objectCount) {
-       
-       setTimeout(() => {
-           for (let h = 0; h < moveCount; h++) {
-            let mc3 = badCount + objectCount + h;
-            newthis3 = new targetBase(arr2[mc3][0], arr2[mc3][1])
 
-            targets[h].style.transition = 'all 200ms linear';
-            targets[h].style.left = newthis3.x;
-            targets[h].style.top = newthis3.y;
-        }
-       }, 500);
-        
+        setTimeout(() => {
+            for (let h = 0; h < moveCount; h++) {
+                let mc3 = badCount + objectCount + h;
+                newthis3 = new targetBase(arr2[mc3][0], arr2[mc3][1])
+
+                targets[h].style.transition = 'all 200ms linear';
+                targets[h].style.left = newthis3.x;
+                targets[h].style.top = newthis3.y;
+            }
+        }, 500);
+
     }
 
 }

@@ -79,132 +79,106 @@ window.onload = function () {
         startTheGame();
     });
 };
-
 // -----------------------------TARGETS-------------------------------------------|
-// Tagtet possition for move
 
-let moveCount = 0;
-// Move random target 
-function move() {
+let w = gameWindowElement.offsetWidth;
+let h = gameWindowElement.offsetHeight;
 
-    let x = [5]
-    let y = [5]
-    let px = 5;
-    let py = 5;
-    for (let i = 0; i < 5; i++) {
-        x.push(px += 16);
-        y.push(py += 16);
-    };
-    if (moveCount <= objectCount) {
-        for (let h = 0; h < moveCount; h++) {
-            let m = x[(Math.floor(Math.random() * x.length)) | 0];
-            let l = y[(Math.floor(Math.random() * y.length)) | 0];
-
-            targets[h].style.transition = 'all 200ms linear';
-            targets[h].style.left = m + '%';
-            targets[h].style.top = l + '%';
-            console.log(h);
-        }
-    }
-}
-
-w = gameWindowElement.offsetWidth;
-h = gameWindowElement.offsetHeight;
 let bad = document.getElementsByClassName('bad');
 let targets = document.getElementsByClassName('target');
 //target object count
 let objectCount;
 // Trarget Colors
-
+let badCount = 0;
 let colours = ['red', 'royalblue', 'green'];
-
 //this line below from stackoverflow
-let randColor = colours[(Math.random() * colours.length) | 1]
+let randColor = colours[(Math.random() * colours.length) | Math.random() * colours.length]
 // append color and position for individual targets 
-let posx;
-let posy;
-//Target position in screen
-function objects() {
-    posx = [2];
-    posy = [2];
-    // Positions gets pushed in to array
-    let pushx = 0;
-    let pushy = 0;
-    let theNum = 9;
-    let a = 87 / theNum;
-
-    let theNum2 = 12;
-    let b = 86 / theNum2;
-
-    if (badCount + objectCount > theNum) {
-        theNum = badCount + objectCount
-        a = 85 / theNum;
-    }
-
-    if (badCount + objectCount > theNum2) {
-        theNum2 = badCount + objectCount
-        b = 92 / theNum2;
-    }
-
-    if (w < 540) {
-        for (let i = 0; i < theNum2; i++) {
-            posy.push(pushy += b);
-        };
-        for (let i = 0; i < theNum; i++) {
-            posx.push(pushx += a);
-        };
-    } else if (h < 540) {
-
-        for (let i = 0; i < theNum; i++) {
-            posx.push(pushx += a);
-        };
-        for (let i = 0; i < theNum2; i++) {
-            posy.push(pushy += b);
-        };
 
 
-    } else {
-        for (let i = 0; i < theNum2; i++) {
-            posx.push(pushx += b);
-            posy.push(pushy += b);
-        };
-    }
-    //Positions are randomly pulled from the array, then position gets 
-    //spliced from the array to avoid the next object picking the same position. 
-    for (let i = 0; i < objectCount; i++) {
-        randColor = colours[(Math.random() * colours.length) | 0];
+//Positions are randomly pulled from the array, then position gets 
 
-        let m = posx[(Math.floor(Math.random() * posx.length)) | 0];
-        let l = posy[(Math.floor(Math.random() * posy.length)) | 0];
+let num = 0;
+let num1 = 0;
+let arr = []
+let arr1 = []
 
-        targets[i].style.left = m + '%';
-        posx.splice(posx.indexOf(m), 1);
-        targets[i].style.top = l + '%';
-        posy.splice(posy.indexOf(l), 1);
-        targets[i].style.display = 'block';
-        targets[i].style.backgroundColor = randColor;
-    };
+for (let i = 0; i < 9; i++) {
+    arr.push(num += 9)
+    arr1.push(num1 += 9)
 }
 
-let badCount = 0;
-//bad targets position
-function badObjects() {
-    //Positions are randomly pulled from the array, then position gets 
-    //spliced from the array to avoid the next object picking the same position.
-    setTimeout(() => {
-        for (let i = 0; i < badCount; i++) {
+let arr3 = [];
+for (a in arr) {
+    for (b in arr1) {
+        if (arr[a] != arr[b]) {
+            arr3.push([arr[a], arr[b]])
 
-            let m = posx[(Math.floor(Math.random() * posx.length)) | Math.floor(Math.random() * posx.length)];
-            let l = posy[(Math.floor(Math.random() * posy.length)) | Math.floor(Math.random() * posy.length)];
-            bad[i].style.display = 'block';
+        }
+    }
+}
+let arr2 = arr3.sort(() => .5 - Math.random());
+let newthis;
 
-            bad[i].style.left = m + '%';
-            posx.splice(posx.indexOf(m), 1);
-            bad[i].style.top = l + '%';
-            posy.splice(posy.indexOf(l), 1);
-            bad[i].style.backgroundColor = 'gray';
-        };
-    }, 20)
+class targetBase {
+    constructor(x, y) {
+        this.x = x + '%';
+        this.y = y + '%';
+        this.c = randColor = colours[(Math.random() * colours.length) | 0];
+        this.cb = 'gray';
+    }
+}
+
+randColor = colours[(Math.random() * colours.length) | 0];
+let moveCount = 0;
+
+function objects() {
+    arr1 = arr3.sort(() => .5 - Math.random());
+
+    for (let i = 0; i < objectCount; i++) {
+        let target = targets[i];
+        setTimeout(function timer() {
+            target.style.display = 'block';
+            newthis = new targetBase(arr2[i][0], arr2[i][1])
+
+            target.style.left = newthis.x;
+            target.style.top = newthis.y;
+
+            target.style.backgroundColor = newthis.c;
+        }, i * 1);
+
+    };
+
+    //bad targets position
+    if (badCount > 0) {
+        setTimeout(function timer8() {
+            for (let o = 0; o < badCount; o++) {
+                let mc2 = objectCount + o;
+                bad[o].style.display = 'block';
+
+                newthis2 = new targetBase(arr2[mc2][0], arr2[mc2][1])
+                bad[o].style.left = newthis2.x;
+                bad[o].style.top = newthis2.y;
+
+                bad[o].style.backgroundColor = newthis2.cb;
+            }
+        }, 10);
+    };
+    // Move random target 
+    if (moveCount > 0 && moveCount <= objectCount) {
+       
+       setTimeout(() => {
+           for (let h = 0; h < moveCount; h++) {
+            let mc3 = badCount + objectCount + h;
+            newthis3 = new targetBase(arr2[mc3][0], arr2[mc3][1])
+
+            targets[h].style.transition = 'all 200ms linear';
+            targets[h].style.left = newthis3.x;
+            targets[h].style.top = newthis3.y;
+        }
+       }, 500);
+        
+    }
 
 }
 
@@ -555,11 +529,7 @@ function levelH() {
 
     function timingF() {
         speedMeterF();
-        setTimeout(() => {
-            move();
-        }, devideSpeed / Math.floor(Math.random() * 4) + 1);
         objects();
-        badObjects(badCount);
         setTimeout(timigFunction, timing);
     }
 }

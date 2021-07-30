@@ -20,7 +20,7 @@ let cubes = document.getElementsByClassName('none');
 //_______GAME CONTROLS________|
 pointsForLife = 25;
 //Remove Black target points
-let removeBad = 2;
+let removeBad = 50;
 //Progress controls|
 let addTargetPoints = 200;
 let moveTaargetPoints = 100;

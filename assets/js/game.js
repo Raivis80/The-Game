@@ -22,7 +22,7 @@ pointsForLife = 25;
 //Remove Black target points
 let removeBad = 50;
 //Progress controls|
-let addTargetPoints = 250;
+let addTargetPoints = 200;
 let moveTaargetPoints = 100;
 let sppedProgress = 500;
 
@@ -95,7 +95,7 @@ let countDown = () => {
     p.appendChild(text);
     p.classList.add('counter');
     gameWindowElement.appendChild(p);
-    
+
 
     for (let b = 0; b < 3; b++) {
         setTimeout(() => {
@@ -103,13 +103,14 @@ let countDown = () => {
             p.style.color = c2[b];
             p.style.transform = 'scale(1.6) translate(-25%, -25%)'
             p.style.opacity = 6;
-            setTimeout(()=>{
-
+            setTimeout(() => {
                 p.style.transform = 'scale(1) translate(-50%, -50%)'
                 p.style.opacity = 0;
+                if (b == 2) {
+                    p.remove();
+                }
             }, 300)
         }, b * 600)
-       
     }
 }
 
@@ -153,30 +154,31 @@ function arrays() {
 
 let moveCount = 0;
 
+let tarPos = ((a, b)=>{
+    a.style.display = 'block';
+    a.style.left = arr2[b][0] + '%';
+    a.style.top = arr2[b][1] + '%';
+})
 function objects() {
     arrays()
     let colours = ['red', 'royalblue', 'green'];
     //Target position
     for (let i = 0; i < objectCount; i++) {
-        let target = targets[i];
+        let t = targets[i];
         setTimeout(function timer() {
             let randColor = colours[(Math.random() * colours.length) | 0];
-            target.style.display = 'block';
-            target.style.left = arr2[i][0] + '%';
-            target.style.top = arr2[i][1] + '%';
-            target.style.backgroundColor = randColor;
+            tarPos(t, i);
+            t.style.backgroundColor = randColor;
         }, i * 1);
-
     };
     //bad targets position
     if (badCount > 0) {
         setTimeout(function timer8() {
             for (let o = 0; o < badCount; o++) {
                 let mc2 = objectCount + o;
-                bad[o].style.display = 'block';
-                bad[o].style.left = arr2[mc2][0] + '%';
-                bad[o].style.top = arr2[mc2][1] + '%';
-                bad[o].style.backgroundColor = 'gray';
+                let b = bad[o];
+                tarPos(b, mc2);
+                b.style.backgroundColor = 'gray';
             }
         }, 10);
     };
@@ -185,24 +187,34 @@ function objects() {
         setTimeout(() => {
             for (let h = 0; h < moveCount; h++) {
                 let mc3 = badCount + objectCount + h;
+                let m = targtets[h];
                 targets[h].style.transition = 'all 200ms linear';
-                targets[h].style.left = arr2[mc3][0] + '%';
-                targets[h].style.top = arr2[mc3][1] + '%';
+                tarPos(m, mc3);
             }
         }, 500);
     }
 }
+//Target click effect
+let effect = ((x) => {
+    x.style.transform = 'scale(1.2)';
+    setTimeout(() => {
+        x.style.transform = 'scale(1)';
+        x.style.display = 'none';
+    }, 20)
+})
 
 // bad listeners
 function addBad() {
+    let that;
     badCount++;
     setTimeout(() => {
         for (let i = 0; i < badCount; i++)
             bad[i].addEventListener('click', clickEvent = () => {
-                bad[i].style.display = 'none';
+                that = bad[i];
+                effect(that);
                 scoreCount = score.innerText;
             })
-    }, 20);
+    }, 30);
 }
 
 //remove bad listener
@@ -214,10 +226,12 @@ function removeBadListener() {
 
 //target event listeners + styling
 function targetSetup() {
+    let t;
     for (let i = 0; i < objectCount; i++) {
-        livesDivElement.style.transition = ".6s";
+        
         targets[i].addEventListener('click', clickEvent = () => {
-            targets[i].style.display = 'none';
+            that = targets[i];
+            effect(t);
             scoreCount = score.innerText;
             livesLogic();
         });
@@ -335,7 +349,7 @@ const livesElement = document.getElementById('lives_remailing');
 let life1 = livesElement.children[0];
 let life2 = livesElement.children[1];
 let life3 = livesElement.children[2];
-
+livesDivElement.style.transition = ".6s";
 livesDivElement.style.width = '100%';
 livesDivElement.style.backgroundColor = 'green';
 speedMeter.style.backgroundColor = '';
@@ -473,9 +487,10 @@ function gameProgress() {
         addTargetPoints = addTargetPoints + targetScore;
         objectCount++; // adds the target     
         let listen = objectCount - 1;
+        let that = targets[listen]; 
         setTimeout(() => { // adds event listeners time out 
             targets[listen].addEventListener('click', addClickEvent = () => {
-                targets[listen].style.display = 'none';
+                effect(that);
                 scoreCount = score.innerText;
                 livesLogic();
             });
@@ -524,7 +539,6 @@ const gameOverElement = document.getElementById('game-over');
 const gameOverChild2 = document.getElementById('game-over').children[1];
 
 function stopTheGame() {
-    document.getElementById('new_game_btn').addEventListener('click', pageReload1);
     document.getElementById('contact_button2').addEventListener('click', contactPage);
     document.getElementById('new_game_btn').addEventListener('click', pageReload1);
     gameWindowElement.removeEventListener('mousedown', detectWindowEvents);

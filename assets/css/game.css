@@ -71,10 +71,12 @@ html {
     box-shadow: inset 0 0 6px rgb(0, 0, 0, .4);
     color: royalblue
 }
-#lives_remaining,
+#lives_remailing,
 #score_counter {
+    display: flex;
     min-width: 110px;
 }
+
 
 .counter {
     font-family: 'Press Start 2P', cursive;
@@ -90,7 +92,8 @@ html {
 .score1,
 .score2,
 .score3 {
-
+    text-align: center;
+    width: 100%;
 }
 .score2 {
     color: green;
@@ -252,9 +255,7 @@ html {
 }
 
 /* --------lives remaining -----------*/
-#lives_remailing {
-    display: flex;
-}
+
 
 .life {
     box-shadow: inset 0 0 5px rgb(0, 0, 0, .4);

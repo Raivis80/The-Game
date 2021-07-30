@@ -71,6 +71,10 @@ html {
     box-shadow: inset 0 0 6px rgb(0, 0, 0, .4);
     color: royalblue
 }
+#lives_remaining,
+#score_counter {
+    min-width: 110px;
+}
 
 .counter {
     font-family: 'Press Start 2P', cursive;
@@ -83,7 +87,11 @@ html {
       left: 50%;
       transition: all 200ms cubic-bezier(.4, -0.91, .47, 1.75);
 }
+.score1,
+.score2,
+.score3 {
 
+}
 .score2 {
     color: green;
 }
@@ -96,7 +104,6 @@ html {
     margin-top: 6px;
     height: 15px;
     width: 100%;
-
     background: linear-gradient(to right, green 80%, red 20%);
 }
 

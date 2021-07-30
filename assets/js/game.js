@@ -205,13 +205,13 @@ let effect = ((x) => {
 
 // bad listeners
 function addBad() {
-    let that;
+    let b;
     badCount++;
     setTimeout(() => {
         for (let i = 0; i < badCount; i++)
             bad[i].addEventListener('click', clickEvent = () => {
-                that = bad[i];
-                effect(that);
+                b = bad[i];
+                effect(b);
                 scoreCount = score.innerText;
             })
     }, 30);
@@ -230,7 +230,7 @@ function targetSetup() {
     for (let i = 0; i < objectCount; i++) {
         
         targets[i].addEventListener('click', clickEvent = () => {
-            that = targets[i];
+            t = targets[i];
             effect(t);
             scoreCount = score.innerText;
             livesLogic();

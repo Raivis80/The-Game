@@ -56,6 +56,7 @@ window.onload = function () {
         } else {
             objectCount = 1;
         }
+        setTimeout(countDown, 600);
         startTheGame(levelsElement);
     });
 
@@ -67,6 +68,7 @@ window.onload = function () {
         } else {
             objectCount = 2;
         }
+        setTimeout(countDown, 600);
         startTheGame(levelsElement);
     });
 
@@ -78,9 +80,39 @@ window.onload = function () {
         } else {
             objectCount = 3;
         }
+        setTimeout(countDown, 600);
         startTheGame(levelsElement);
     });
 };
+
+
+//counter -----------------------------------------------------------------------------
+let countDown = () => {
+    let c2 = ['green', 'royalblue', 'red'];
+    let p = document.createElement("p");
+    let text;
+    text = document.createTextNode(4);
+    p.appendChild(text);
+    p.classList.add('counter');
+    gameWindowElement.appendChild(p);
+    
+
+    for (let b = 0; b < 3; b++) {
+        setTimeout(() => {
+            p.innerText--;
+            p.style.color = c2[b];
+            p.style.transform = 'scale(1.6) translate(-25%, -25%)'
+            p.style.opacity = 6;
+            setTimeout(()=>{
+
+                p.style.transform = 'scale(1) translate(-50%, -50%)'
+                p.style.opacity = 0;
+            }, 300)
+        }, b * 600)
+       
+    }
+}
+
 
 // -----------------------------TARGETS-------------------------------------------|
 let bad = document.getElementsByClassName('bad');
@@ -120,6 +152,7 @@ function arrays() {
 }
 
 let moveCount = 0;
+
 function objects() {
     arrays()
     let colours = ['red', 'royalblue', 'green'];
@@ -251,22 +284,24 @@ function livesLogic() {
     countDifference();
     gameProgress();
     if (badCount > 0) {
-        if (removeBad == scoreStreak.innerText ) {
-            removeBad = removeBad + removeBad; 
+        if (removeBad == scoreStreak.innerText) {
+            removeBad = removeBad + removeBad;
             removeBadListener();
         }
     }
 }
 
+
 //miss target Flash efect
 function missedEffect() {
-    gameWindowElement.style.backgroundColor = 'rgba(255, 0, 0, 0.2)';
-    setTimeout(resetEffect, 20);
+    gameWindowElement.classList.add('backgroundClicked');
+    setTimeout(resetEffect, 30);
 
     function resetEffect() {
-        gameWindowElement.style.backgroundColor = 'oldlace';
+        gameWindowElement.classList.remove('backgroundClicked');
     }
 }
+
 
 //----------------------------GAME WINDOW-----------------------------------------|
 let detectWindowEvents;
@@ -507,7 +542,7 @@ function stopTheGame() {
     livesDivElement.style.width = '0';
     gameOverElement.style.display = 'flex';
     clearInterval(timer1);
-    setTimeout(()=>{
+    setTimeout(() => {
         gameOverChild2.style.margin = '0';
     }, 200);
 }

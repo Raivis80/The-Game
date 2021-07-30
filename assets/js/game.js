@@ -20,7 +20,7 @@ let cubes = document.getElementsByClassName('none');
 //_______GAME CONTROLS________|
 pointsForLife = 25;
 //Remove Black target points
-let removeBad = 50;
+let removeBad = 2;
 //Progress controls|
 let addTargetPoints = 200;
 let moveTaargetPoints = 100;
@@ -187,7 +187,7 @@ function objects() {
         setTimeout(() => {
             for (let h = 0; h < moveCount; h++) {
                 let mc3 = badCount + objectCount + h;
-                let m = targtets[h];
+                let m = targets[h];
                 targets[h].style.transition = 'all 200ms linear';
                 tarPos(m, mc3);
             }

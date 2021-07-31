@@ -154,7 +154,7 @@ let col;
 // Object Base
 let tarPos = ((a, b) => {
     let colours = ['red', 'royalblue', 'green'];
-    let randColor = colours[(Math.random() * 3) | 0];
+    let randColor = colours[(Math.random() * colours.length) | 0];
     a.style.display = 'block';
     a.style.left = arr2[b][0] + '%';
     a.style.top = arr2[b][1] + '%';
@@ -163,7 +163,7 @@ let tarPos = ((a, b) => {
             a.style.display = 'none';
             kill();
         }
-    }, speed - 10)
+    }, speed - 20)
     switch (col) {
         case 0:
             a.style.backgroundColor = randColor;
@@ -180,7 +180,7 @@ function objects() {
     //Target position
     for (let i = 0; i < objectCount; i++) {
         let t = targets[i];
-        setTimeout(() => {
+        setTimeout(function timer() {
             col = 0;
             tarPos(t, i);
         }, i * 0);
@@ -188,14 +188,14 @@ function objects() {
 
     //bad targets position
     if (badCount > 0) {
-        setTimeout(() => {
+        setTimeout(function timer8() {
             for (let o = 0; o < badCount; o++) {
                 let mc2 = objectCount + o;
                 let b = bad[o];
                 col = 1;
-                tarPos(b, mc2);
+                tarPos(b, mc2);              
             }
-        }, 0);
+        }, 20);
     };
 
     // Move random target 
@@ -205,7 +205,8 @@ function objects() {
                 let mc3 = badCount + objectCount + h;
                 let m = targets[h];
                 targets[h].style.transition = 'all 200ms linear';
-                tarPos(m, mc3);
+                m.style.left = arr2[mc3][0] + '%';
+                m.style.top = arr2[mc3][1] + '%';
             }
         }, 500);
     }
@@ -326,6 +327,7 @@ let detectWindowEvents;
 // detect window clicks
 function gameWindow() {
     gameWindowElement.addEventListener('click', detectWindowEvents);
+
     function detectWindowEvents(event) {
         //Prevent click event trigger on child elements.                     
         if (this === event.target) {
@@ -410,6 +412,7 @@ function addLife() {
 function deductLife(x) {
     x;
     if (x == 2) {
+        missedEffect();
         lives[0].style.backgroundColor = 'oldlace';
         livesDivElement.style.width = '0'
         clicks = 0;
@@ -417,7 +420,9 @@ function deductLife(x) {
         scoreStreak.innerText = 0;
         streak2 = 0;
         streak1 = 0;
-    } else if (x == 1) {     
+
+    } else if (x == 1) {
+        missedEffect();
         lives[0].style.backgroundColor = 'oldlace';
         lives[1].style.backgroundColor = 'oldlace';
         livesDivElement.style.width = '0';
@@ -426,8 +431,9 @@ function deductLife(x) {
         scoreStreak.innerText = 0;
         streak2 = 0;
         streak1 = 0;
-    } else if (x <= 0) {  
-        missedEffect(); 
+
+    } else if (x <= 0) {
+        missedEffect();
         setTimeout(stopTheGame, 30);
     }
 }
@@ -446,6 +452,7 @@ let speedMeterF = () => {
         task(b)
     }
 }
+
 
 //----------------------GAME PROGRESS-----------------------------------------------| 
 //Game Progress 

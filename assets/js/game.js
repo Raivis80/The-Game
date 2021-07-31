@@ -150,9 +150,11 @@ function arrays() {
 }
 
 let moveCount = 0;
-
+let col;
 // Object Base
 let tarPos = ((a, b) => {
+    let colours = ['red', 'royalblue', 'green'];
+    let randColor = colours[(Math.random() * 3) | 0];
     a.style.display = 'block';
     a.style.left = arr2[b][0] + '%';
     a.style.top = arr2[b][1] + '%';
@@ -162,35 +164,40 @@ let tarPos = ((a, b) => {
             kill();
         }
     }, speed - 20)
+    switch (col) {
+        case 0:
+            a.style.backgroundColor = randColor;
+            break;
+        case 1:
+            a.style.backgroundColor = 'gray';
+            break;
+    }
 })
 
 //Object Creation
 function objects() {
     arrays()
-
-    let colours = ['red', 'royalblue', 'green'];
     //Target position
     for (let i = 0; i < objectCount; i++) {
         let t = targets[i];
-
-        setTimeout(function timer() {
-            let randColor = colours[(Math.random() * colours.length) | 0];
+        setTimeout(() => {
+            col = 0;
             tarPos(t, i);
-            t.style.backgroundColor = randColor;
-
         }, i * 0);
     };
+
     //bad targets position
     if (badCount > 0) {
-        setTimeout(function timer8() {
+        setTimeout(() => {
             for (let o = 0; o < badCount; o++) {
                 let mc2 = objectCount + o;
                 let b = bad[o];
+                col = 1;
                 tarPos(b, mc2);
-                b.style.backgroundColor = 'gray';
             }
-        }, 10);
+        }, 20);
     };
+
     // Move random target 
     if (moveCount > 0 && moveCount <= objectCount) {
         setTimeout(() => {
@@ -203,6 +210,7 @@ function objects() {
         }, 500);
     }
 }
+
 //Target click effect
 let effect = ((x) => {
     x.style.transform = 'scale(1.3)';
@@ -402,7 +410,6 @@ function addLife() {
 function deductLife(x) {
     x;
     if (x == 2) {
-        missedEffect();
         lives[0].style.backgroundColor = 'oldlace';
         livesDivElement.style.width = '0'
         clicks = 0;
@@ -410,9 +417,7 @@ function deductLife(x) {
         scoreStreak.innerText = 0;
         streak2 = 0;
         streak1 = 0;
-
-    } else if (x == 1) {
-        missedEffect();
+    } else if (x == 1) {     
         lives[0].style.backgroundColor = 'oldlace';
         lives[1].style.backgroundColor = 'oldlace';
         livesDivElement.style.width = '0';
@@ -421,9 +426,8 @@ function deductLife(x) {
         scoreStreak.innerText = 0;
         streak2 = 0;
         streak1 = 0;
-
-    } else if (x <= 0) {
-        missedEffect();
+    } else if (x <= 0) {  
+        missedEffect(); 
         setTimeout(stopTheGame, 30);
     }
 }
@@ -442,7 +446,6 @@ let speedMeterF = () => {
         task(b)
     }
 }
-
 
 //----------------------GAME PROGRESS-----------------------------------------------| 
 //Game Progress 

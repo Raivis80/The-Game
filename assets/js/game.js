@@ -10,7 +10,7 @@ for (screen of startGameElement.children) {
 
 let speed;
 let timing;
-let speedScore;
+
 let pointsForLife;
 let objectCount;
 let badCount = 0;
@@ -39,7 +39,7 @@ if ('ontouchstart' in window) {
     speed = 3000;
 }
 
-// Game event listeners
+//------------------------- Game event listeners------------------------------------|
 window.onload = function () {
     document.getElementById('contact_button').addEventListener('click', contactPage);
     document.getElementById('info').addEventListener('click', infoPopout);
@@ -85,8 +85,7 @@ window.onload = function () {
     });
 };
 
-
-//counter -----------------------------------------------------------------------------
+//---------------------------------Counter -----------------------------------------|
 let countDown = () => {
     let c2 = ['green', 'royalblue', 'red'];
     let p = document.createElement("p");
@@ -95,7 +94,6 @@ let countDown = () => {
     p.appendChild(text);
     p.classList.add('counter');
     gameWindowElement.appendChild(p);
-
 
     for (let b = 0; b < 3; b++) {
         setTimeout(() => {
@@ -113,7 +111,6 @@ let countDown = () => {
         }, b * 600)
     }
 }
-
 
 // -----------------------------TARGETS-------------------------------------------|
 let bad = document.getElementsByClassName('bad');
@@ -154,22 +151,34 @@ function arrays() {
 
 let moveCount = 0;
 
-let tarPos = ((a, b)=>{
+// Object Base
+let tarPos = ((a, b) => {
     a.style.display = 'block';
     a.style.left = arr2[b][0] + '%';
     a.style.top = arr2[b][1] + '%';
+    setTimeout(() => {
+        if (a.style.display === 'block') {
+            a.style.display = 'none';
+            kill();
+        }
+    }, speed - 20)
 })
+
+//Object Creation
 function objects() {
     arrays()
+
     let colours = ['red', 'royalblue', 'green'];
     //Target position
     for (let i = 0; i < objectCount; i++) {
         let t = targets[i];
+
         setTimeout(function timer() {
             let randColor = colours[(Math.random() * colours.length) | 0];
             tarPos(t, i);
             t.style.backgroundColor = randColor;
-        }, i * 1);
+
+        }, i * 0);
     };
     //bad targets position
     if (badCount > 0) {
@@ -196,11 +205,11 @@ function objects() {
 }
 //Target click effect
 let effect = ((x) => {
-    x.style.transform = 'scale(1.2)';
+    x.style.transform = 'scale(1.3)';
     setTimeout(() => {
         x.style.transform = 'scale(1)';
         x.style.display = 'none';
-    }, 20)
+    }, 30)
 })
 
 // bad listeners
@@ -228,7 +237,6 @@ function removeBadListener() {
 function targetSetup() {
     let t;
     for (let i = 0; i < objectCount; i++) {
-        
         targets[i].addEventListener('click', clickEvent = () => {
             t = targets[i];
             effect(t);
@@ -263,7 +271,7 @@ let streak2 = 0;
 let streak1 = 0;
 let highScore = 0;
 // scorestreak counter
-function countHighScore(highScoreClick, higScoreMiss) {
+function countHighScore() {
     highScoreClick = streak1;
     higScoreMiss = streak2;
     if (highScoreClick > higScoreMiss) {
@@ -279,7 +287,8 @@ function countHighScore(highScoreClick, higScoreMiss) {
 let clicks = 0;
 let difference = 0;
 // get the difference
-function countDifference(windowClick) {
+function countDifference() {
+    let windowClick;
     if (clicks > windowClick) {
         difference = Math.abs(windowClick - difference);
     } else {
@@ -292,7 +301,6 @@ function livesLogic() {
     score.innerText++;
     clicks++;
     streak1++;
-    notClick++;
     addLife();
     countHighScore();
     countDifference();
@@ -305,6 +313,32 @@ function livesLogic() {
     }
 }
 
+//----------------------------GAME WINDOW-----------------------------------------|
+let detectWindowEvents;
+// detect window clicks
+function gameWindow() {
+    gameWindowElement.addEventListener('click', detectWindowEvents);
+    function detectWindowEvents(event) {
+        //Prevent click event trigger on child elements.                     
+        if (this === event.target) {
+            kill();
+        };
+    };
+}
+
+let kill = (() => {
+    missedEffect();
+    clicks = 0;
+    streak2 = 0;
+    streak1 = 0;
+    livesCount--;
+    addBad();
+    scoreMissed.innerText++;
+    deductLife(livesCount);
+    countDifference();
+    livesDivElement.style.width = '0';
+    gameWindowElement.style.backgroundColor = 'rgba(255, 0, 0, 0.2)';
+})
 
 //miss target Flash efect
 function missedEffect() {
@@ -316,39 +350,9 @@ function missedEffect() {
     }
 }
 
-
-//----------------------------GAME WINDOW-----------------------------------------|
-let detectWindowEvents;
-// detect game window clicks
-function gameWindow() {
-    // Game window mousedown listener
-    gameWindowElement.addEventListener('click', detectWindowEvents);
-
-    function detectWindowEvents(event) {
-        //Prevent click event trigger on child elements.                     
-        if (this === event.target) {
-            missedEffect();
-            clicks = 0;
-            streak2 = 0;
-            streak1 = 0;
-            livesCount--;
-            addBad()
-            scoreMissed.innerText++;
-            deductLife();
-            countDifference();
-            livesDivElement.style.width = '0';
-            gameWindowElement.style.backgroundColor = 'rgba(255, 0, 0, 0.2)';
-        };
-    };
-}
-
 //-------------------------------LIVES COUNTER------------------------------------|
 // Lives Elements
 const livesDivElement = document.getElementById('add_life');
-const livesElement = document.getElementById('lives_remailing');
-let life1 = livesElement.children[0];
-let life2 = livesElement.children[1];
-let life3 = livesElement.children[2];
 livesDivElement.style.transition = ".6s";
 livesDivElement.style.width = '100%';
 livesDivElement.style.backgroundColor = 'green';
@@ -366,7 +370,7 @@ while (i < livesCount) {
 // How many points for new life must divide with 100 evenly
 let divider = 100 / pointsForLife;
 
-//add one life if 50 scorestreak reached, this number can be set to any
+//add one life
 function addLife() {
     if (livesCount === 0) {
         missedEffect();
@@ -395,9 +399,9 @@ function addLife() {
 }
 
 // Deduct one life if the target is missed
-function deductLife() {
-    livesCount;
-    if (livesCount == 2) {
+function deductLife(x) {
+    x;
+    if (x == 2) {
         missedEffect();
         lives[0].style.backgroundColor = 'oldlace';
         livesDivElement.style.width = '0'
@@ -407,7 +411,7 @@ function deductLife() {
         streak2 = 0;
         streak1 = 0;
 
-    } else if (livesCount == 1) {
+    } else if (x == 1) {
         missedEffect();
         lives[0].style.backgroundColor = 'oldlace';
         lives[1].style.backgroundColor = 'oldlace';
@@ -418,7 +422,7 @@ function deductLife() {
         streak2 = 0;
         streak1 = 0;
 
-    } else if (livesCount <= 0) {
+    } else if (x <= 0) {
         missedEffect();
         setTimeout(stopTheGame, 30);
     }
@@ -439,42 +443,12 @@ let speedMeterF = () => {
     }
 }
 
-//------------------------------MISSED TARGET LOGIC-------------------------------|
 
-//timing for target display block check.
-//If any targets left/s with display set to block
-//the deductLife(); function gets triggered
-let notClick = 0;
-
-function timigFunction() {
-    notClick = 0;
-    for (let i = 0; i < targets.length; i++)
-        if (targets[i].style.display === 'block') {
-            notClick++;
-            addBad();
-            scoreMissed.innerText++;
-        }
-    for (let i = 0; i < bad.length; i++)
-        if (bad[i].style.display === 'block') {
-            notClick++;
-            addBad();
-            scoreMissed.innerText++;
-        }
-    if (notClick >= 3 && objectCount + badCount >= 3) {
-        missedEffect();
-        setTimeout(stopTheGame, 30);
-    } else if (notClick == 2 || notClick == 1) {
-        livesCount = livesCount - notClick;
-        scoreMissed.innerText + livesCount;
-        deductLife();
-    }
-    notClick = 0;
-}
-
-//----------------------GAME PROGRESS SPEED INCREASE------------------------------| 
-
+//----------------------GAME PROGRESS-----------------------------------------------| 
 //Game Progress 
 function gameProgress() {
+    let speedScore;
+    speedScore = sppedProgress;
     let targetScore = addTargetPoints;
     let targetPoints = moveTaargetPoints;
     if (sppedProgress == score.innerText) {
@@ -487,7 +461,7 @@ function gameProgress() {
         addTargetPoints = addTargetPoints + targetScore;
         objectCount++; // adds the target     
         let listen = objectCount - 1;
-        let that = targets[listen]; 
+        let that = targets[listen];
         setTimeout(() => { // adds event listeners time out 
             targets[listen].addEventListener('click', addClickEvent = () => {
                 effect(that);
@@ -496,7 +470,6 @@ function gameProgress() {
             });
         }, 20); // time out is set for 20 ms
     }
-
     if (moveTaargetPoints == score.innerText && objectCount <= 12) {
         moveTaargetPoints = moveTaargetPoints + targetPoints
         if (moveCount <= objectCount) {
@@ -504,14 +477,12 @@ function gameProgress() {
         }
     }
 }
-//------------------------------GAME SELLECT--------------------------------------|
+
+//-----------------------------Start-The-GAME--------------------------------------|
 // Timmer variables 
 let timer1;
-
 //timing for target check
 timing = speed - 100;
-//multiples score|
-speedScore = sppedProgress;
 
 //Game setup-------------|
 function startTheGame(x) {
@@ -530,15 +501,13 @@ function levelH() {
     function timingF() {
         speedMeterF();
         objects();
-        setTimeout(timigFunction, timing);
     }
 }
 
 //-------------------------------- STOP THE GAME----------------------------------|
-const gameOverElement = document.getElementById('game-over');
-const gameOverChild2 = document.getElementById('game-over').children[1];
-
 function stopTheGame() {
+    const gameOverElement = document.getElementById('game-over');
+    const gameOverChild2 = document.getElementById('game-over').children[1];
     document.getElementById('contact_button2').addEventListener('click', contactPage);
     document.getElementById('new_game_btn').addEventListener('click', pageReload1);
     gameWindowElement.removeEventListener('mousedown', detectWindowEvents);

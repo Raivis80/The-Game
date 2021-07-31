@@ -163,7 +163,7 @@ let tarPos = ((a, b) => {
             a.style.display = 'none';
             kill();
         }
-    }, speed - 20)
+    }, speed - 10)
     switch (col) {
         case 0:
             a.style.backgroundColor = randColor;
@@ -195,7 +195,7 @@ function objects() {
                 col = 1;
                 tarPos(b, mc2);
             }
-        }, 20);
+        }, 0);
     };
 
     // Move random target 

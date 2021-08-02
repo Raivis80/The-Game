@@ -9,7 +9,7 @@ for (screen of startGameElement.children) {
 }
 
 let speed;
-let timing;
+
 
 let pointsForLife;
 let objectCount;
@@ -152,7 +152,7 @@ function arrays() {
 let moveCount = 0;
 let col;
 // Object Base
-let tarPos = ((a, b) => {
+let tarPos = ((a, b, z) => {
     let colours = ['red', 'royalblue', 'green'];
     let randColor = colours[(Math.random() * colours.length) | 0];
     a.style.display = 'block';
@@ -160,10 +160,18 @@ let tarPos = ((a, b) => {
     a.style.top = arr2[b][1] + '%';
     setTimeout(() => {
         if (a.style.display === 'block') {
-            a.style.display = 'none';
+            a.style.transform = 'scale(1.8)';
+            a.style.opacity = '.5'
+            a.style.transition = 'all .03s cubic-bezier(.19,-1.34,.82,1.98)';
+            
+            setTimeout(() => {
+                a.style.opacity = '.8'
+                a.style.transform = 'scale(1)';
+                a.style.display = 'none';
+            }, 30)
             kill();
         }
-    }, speed - 20)
+    }, z)
     switch (col) {
         case 0:
             a.style.backgroundColor = randColor;
@@ -177,23 +185,30 @@ let tarPos = ((a, b) => {
 //Object Creation
 function objects() {
     arrays()
+    let dev = speed;
+    let dev2 = speed;
     //Target position
     for (let i = 0; i < objectCount; i++) {
         let t = targets[i];
+            
+            dev = dev -= 250;
+            
+            console.log(dev);
         setTimeout(function timer() {
             col = 0;
-            tarPos(t, i);
-        }, i * 0);
+            tarPos(t, i, dev);
+        }, i * 200);
     };
 
     //bad targets position
     if (badCount > 0) {
         setTimeout(function timer8() {
             for (let o = 0; o < badCount; o++) {
+                dev2 -= 250;
                 let mc2 = objectCount + o;
                 let b = bad[o];
                 col = 1;
-                tarPos(b, mc2);              
+                tarPos(b, mc2, dev2);
             }
         }, 20);
     };
@@ -243,6 +258,19 @@ function removeBadListener() {
 }
 
 //target event listeners + styling
+
+function targetSetup() {
+    let t;
+    for (let i = 0; i < objectCount; i++) {
+        targets[i].addEventListener('click', clickEvent = () => {
+            t = targets[i];
+            effect(t);
+            scoreCount = score.innerText;
+            livesLogic();
+        });
+    }
+}
+
 function targetSetup() {
     let t;
     for (let i = 0; i < objectCount; i++) {
@@ -464,7 +492,6 @@ function gameProgress() {
     if (sppedProgress == score.innerText) {
         sppedProgress = sppedProgress + speedScore;
         speed = speed - 200; // Substract 200ms of current speed
-        timing = speed - 100;
     }
 
     if (addTargetPoints == score.innerText && objectCount <= 12) {
@@ -491,8 +518,6 @@ function gameProgress() {
 //-----------------------------Start-The-GAME--------------------------------------|
 // Timmer variables 
 let timer1;
-//timing for target check
-timing = speed - 100;
 
 //Game setup-------------|
 function startTheGame(x) {
@@ -525,19 +550,21 @@ function stopTheGame() {
         bad[i].style.display = 'none';
         bad[i].removeEventListener('click', clickEvent = () => {});
     }
+    setTimeout(() => {
+        gameOverChild2.style.margin = '0';
+    }, 300);
     targetsDisplayNone();
     for (j of lives) {
         j.style.backgroundColor = 'oldlace';
     }
     contactWindow.style.display = 'none';
     speedMeter.style.display = 'none'
-    speed = speed * 1000;
+
     livesDivElement.style.width = '0';
     gameOverElement.style.display = 'flex';
     clearInterval(timer1);
-    setTimeout(() => {
-        gameOverChild2.style.margin = '0';
-    }, 200);
+    // speed = speed * 1000;
+
 }
 
 //Game Over reload screen 

@@ -307,8 +307,8 @@ html {
 }
 
 .slide_up {
-    margin-top: 150%;
-    transition: margin-top 1s cubic-bezier(.36, 1.27, 1, .49);
+    margin-top: 300%;
+    transition: margin-top 2s cubic-bezier(.36, 1.27, 1, .49);
 }
 
 .slide_right {

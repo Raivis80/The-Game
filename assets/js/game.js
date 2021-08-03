@@ -171,7 +171,7 @@ let tarPos = ((a, b, z) => {
             }, 30)
             kill();
         }
-    }, z)
+    }, speed - 100)
     switch (col) {
         case 0:
             a.style.backgroundColor = randColor;
@@ -185,30 +185,24 @@ let tarPos = ((a, b, z) => {
 //Object Creation
 function objects() {
     arrays()
-    let dev = speed;
-    let dev2 = speed;
+
     //Target position
     for (let i = 0; i < objectCount; i++) {
         let t = targets[i];
-            
-            dev = dev -= 250;
-            
-            console.log(dev);
         setTimeout(function timer() {
             col = 0;
-            tarPos(t, i, dev);
-        }, i * 200);
+            tarPos(t, i);
+        }, i * 0);
     };
 
     //bad targets position
     if (badCount > 0) {
         setTimeout(function timer8() {
-            for (let o = 0; o < badCount; o++) {
-                dev2 -= 250;
+            for (let o = 0; o < badCount; o++) {              
                 let mc2 = objectCount + o;
                 let b = bad[o];
                 col = 1;
-                tarPos(b, mc2, dev2);
+                tarPos(b, mc2);
             }
         }, 20);
     };

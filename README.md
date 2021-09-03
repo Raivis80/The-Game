@@ -4,7 +4,7 @@
 
 ![View](project_files/site.PNG)
 
-## [View the live project here.](https://raivis80.github.io/The-Game/game.html)
+## [View the live project here.](https://raivis80.github.io/The-Game/index.html)
 
 ### Table of contents
 

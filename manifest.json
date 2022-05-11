@@ -23,11 +23,11 @@
         "src": "/The-Game/favicon-32x32.png",
         "sizes": "32x32",
         "type": "image/png"
-    }, { "src": "/favicon.ico",
+    }, { "src": "/The-Game/favicon.ico",
         "type": "image/x-icon"
     }],
     "theme_color": "#faebd7",
     "background_color": "#faebd7",
     "display": "standalone",
-    "start_url": "/The-Game/index.html"
+    "start_url": "/The-Game"
 }
